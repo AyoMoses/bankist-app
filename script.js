@@ -71,7 +71,7 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
@@ -132,15 +132,61 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 //? The new array at() method
 // to get an array in a position we'd normally do
-let arr = ['a', 'b', 'c', 'd', 'e', 'f'];
-console.log(arr[2]);
-console.log(arr.at(3)); 
+// let arr = ['a', 'b', 'c', 'd', 'e', 'f'];
+// console.log(arr[2]);
+// console.log(arr.at(3)); 
 
 // getting the last index of an array traditionally
-console.log(arr[arr.length - 1]);
-console.log(arr.slice(-1)[0]);
+// console.log(arr[arr.length - 1]);
+// console.log(arr.slice(-1)[0]);
 // new at method
-console.log(arr.at(-3));
+// console.log(arr.at(-3));
 //? the at method is good for method chaining too
 //? The at() method also works on strings
-console.log('ayodeji'.at(3));
+// console.log('ayodeji'.at(3));
+
+
+
+// BANKIST 
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// the positive values are deposits while the negative are withdrawals
+//? For of loop
+for (const movement of movements) {
+  if (movement > 0) {
+    console.log(`You deposited ${movement}`);
+  } else {
+    console.log(`You withdrew ${Math.abs(movement)}`);
+  }
+}
+console.log('---- Accessing the counter variable with For of ----');
+for (const [i, movement] of movements.entries()) {
+  if (movement > 0) {
+    console.log(`${i + 1}: You deposited ${movement}`);
+  } else {
+    console.log(`${i + 1}: You withdrew ${Math.abs(movement)}`);
+  }
+}
+
+console.log('----- FOR EACH LOOP -----');
+
+movements.forEach(function (movement) {
+  if (movement > 0) {
+    console.log(`You have deposited ${movement}`);
+  } else {
+    console.log(`You withdrew ${Math.abs(movement)}`);
+  }
+})
+
+console.log('--- getting the counter variable with forEach ---');
+
+movements.forEach(function (mov, i, arr) {
+  // the first param is the current value, second is the current index and the last is the entire array
+  if (mov > 0) {
+    console.log(`${i + 1}: You deposited ${mov}`);
+  } else {
+    console.log(`${i + 1}: You withdrew ${Math.abs(mov)}`);
+  }
+})
+
+
+//? when do you now use forEach or forof loop? the forEach does not break out of the loop until its done unlike the forof loop
