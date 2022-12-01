@@ -113,18 +113,34 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //? REVERSE() METHOD
 // it reverses the arrangement of an array
 // the reverse method actually mutates the original array
-let arr = ['a', 'b', 'c', 'd', 'e', 'f'];
-const arr2 = ['l', 'k', 'j', 'i', 'h', 'g'];
-console.log(arr2.reverse());
+// let arr = ['a', 'b', 'c', 'd', 'e', 'f'];
+// const arr2 = ['l', 'k', 'j', 'i', 'h', 'g'];
+// console.log(arr2.reverse());
 
 //? CONCAT METHOD 
 // concat method is used to add two arrays together. It does not mutate the original array
-let letters = arr.concat(arr2);
-console.log(letters);
+// let letters = arr.concat(arr2);
+// console.log(letters);
 //? we can also use the spread operator to concat arrays together
-console.log([...arr, ...arr2]);
+// console.log([...arr, ...arr2]);
 
 
 //? JOIN METHOD 
 // the join method converts an array to a string by putting a seperator we intend to use 
-console.log(letters.join(' + '));
+// console.log(letters.join(' + '));
+
+
+//? The new array at() method
+// to get an array in a position we'd normally do
+let arr = ['a', 'b', 'c', 'd', 'e', 'f'];
+console.log(arr[2]);
+console.log(arr.at(3)); 
+
+// getting the last index of an array traditionally
+console.log(arr[arr.length - 1]);
+console.log(arr.slice(-1)[0]);
+// new at method
+console.log(arr.at(-3));
+//? the at method is good for method chaining too
+//? The at() method also works on strings
+console.log('ayodeji'.at(3));
