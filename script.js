@@ -6,31 +6,39 @@
 
 // Data
 const account1 = {
-  owner: 'Jonas Schmedtmann',
+  owner: 'Ayo Odukoya',
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
   pin: 1111,
 };
 
 const account2 = {
-  owner: 'Jessica Davis',
+  owner: 'Motolani Adelusi',
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
 };
 
+
 const account3 = {
-  owner: 'Steven Thomas Williams',
+  owner: 'Chris Otu',
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
   pin: 3333,
 };
 
 const account4 = {
-  owner: 'Sarah Smith',
+  owner: 'Samuel Adeyemo',
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
   pin: 4444,
+};
+
+const account5 = {
+  owner: 'Adetomiwa Odukoya',
+  movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
+  interestRate: 1.5,
+  pin: 5555,
 };
 
 const accounts = [account1, account2, account3, account4];
@@ -60,6 +68,28 @@ const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
+
+const displayMovements = function (movements) {
+  // this gets the whole HTML child nodes 
+  containerMovements.innerHTML = ''; 
+  //? it works just like textContent = '' that takes just the text node alone
+
+  movements.forEach(function (mov, i) {
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
+
+    const html = `
+    <div class="movements__row">
+      <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
+      <div class="movements__value">${mov}</div>
+    </div>
+    `
+    //? containerMovements is the selector to select movements container
+    //? insertAdjecentHTML adds a specified js written element as text to the node of a DOM with specified position. The position is the first argument while the text to pass is the second
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+  })
+}
+
+displayMovements(account1.movements);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -210,9 +240,9 @@ currencies.forEach(function (key, value, map) {
 const currenciesUnique = new Set(['USD', 'EUR', 'GBP', 'EUR', 'USD']);
 console.log(currenciesUnique);
 
-currenciesUnique.forEach(function(value, _, map) {
+currenciesUnique.forEach(function (value, _, map) {
   //? note: the underscore means a throwaway variable which is not useful but needs to be there. More like a placeholder
- console.log(`${value}: ${value}`);
+  console.log(`${value}: ${value}`);
 })
 //? RETURNS
 // USD: USD
