@@ -65,11 +65,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // LECTURES
 
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
+
 
 // const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
@@ -148,45 +144,77 @@ const currencies = new Map([
 
 
 // BANKIST 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // the positive values are deposits while the negative are withdrawals
 //? For of loop
-for (const movement of movements) {
-  if (movement > 0) {
-    console.log(`You deposited ${movement}`);
-  } else {
-    console.log(`You withdrew ${Math.abs(movement)}`);
-  }
-}
-console.log('---- Accessing the counter variable with For of ----');
-for (const [i, movement] of movements.entries()) {
-  if (movement > 0) {
-    console.log(`${i + 1}: You deposited ${movement}`);
-  } else {
-    console.log(`${i + 1}: You withdrew ${Math.abs(movement)}`);
-  }
-}
+// for (const movement of movements) {
+//   if (movement > 0) {
+//     console.log(`You deposited ${movement}`);
+//   } else {
+//     console.log(`You withdrew ${Math.abs(movement)}`);
+//   }
+// }
+// console.log('---- Accessing the counter variable with For of ----');
+// for (const [i, movement] of movements.entries()) {
+//   if (movement > 0) {
+//     console.log(`${i + 1}: You deposited ${movement}`);
+//   } else {
+//     console.log(`${i + 1}: You withdrew ${Math.abs(movement)}`);
+//   }
+// }
 
-console.log('----- FOR EACH LOOP -----');
+// console.log('----- FOR EACH LOOP -----');
 
-movements.forEach(function (movement) {
-  if (movement > 0) {
-    console.log(`You have deposited ${movement}`);
-  } else {
-    console.log(`You withdrew ${Math.abs(movement)}`);
-  }
-})
+// movements.forEach(function (movement) {
+//   if (movement > 0) {
+//     console.log(`You have deposited ${movement}`);
+//   } else {
+//     console.log(`You withdrew ${Math.abs(movement)}`);
+//   }
+// })
 
-console.log('--- getting the counter variable with forEach ---');
+// console.log('--- getting the counter variable with forEach ---');
 
-movements.forEach(function (mov, i, arr) {
-  // the first param is the current value, second is the current index and the last is the entire array
-  if (mov > 0) {
-    console.log(`${i + 1}: You deposited ${mov}`);
-  } else {
-    console.log(`${i + 1}: You withdrew ${Math.abs(mov)}`);
-  }
-})
+// movements.forEach(function (mov, i, arr) {
+//   // the first param is the current value, second is the current index and the last is the entire array
+//   if (mov > 0) {
+//     console.log(`${i + 1}: You deposited ${mov}`);
+//   } else {
+//     console.log(`${i + 1}: You withdrew ${Math.abs(mov)}`);
+//   }
+// })
 
 
 //? when do you now use forEach or forof loop? the forEach does not break out of the loop until its done unlike the forof loop
+
+
+//? USING FORECH WITH MAPS AND SETS
+const currencies = new Map([
+  ['USD', 'United States dollar'],
+  ['EUR', 'Euro'],
+  ['GBP', 'Pound sterling'],
+]);
+
+//? WHEN WORKING WITH MAP() FOR EACH TAKES THE  key first, value, then the entire map just like working with arrays
+currencies.forEach(function (key, value, map) {
+  console.log(`${key}: ${value}`);
+})
+//returns 
+// United States dollar: USD
+// Euro: EUR
+// Pound sterling: GBP
+
+
+//FOREACH WITH set()
+//? As it is with set() it removes the duplicate and returns the unique values alone. As objects
+const currenciesUnique = new Set(['USD', 'EUR', 'GBP', 'EUR', 'USD']);
+console.log(currenciesUnique);
+
+currenciesUnique.forEach(function(value, _, map) {
+  //? note: the underscore means a throwaway variable which is not useful but needs to be there. More like a placeholder
+ console.log(`${value}: ${value}`);
+})
+//? RETURNS
+// USD: USD
+// EUR: EUR
+// GBP: GBP
