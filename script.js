@@ -71,7 +71,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 const displayMovements = function (movements) {
   // this gets the whole HTML child nodes 
-  containerMovements.innerHTML = ''; 
+  containerMovements.innerHTML = '';
   //? it works just like textContent = '' that takes just the text node alone
 
   movements.forEach(function (mov, i) {
@@ -248,3 +248,18 @@ currenciesUnique.forEach(function (value, _, map) {
 // USD: USD
 // EUR: EUR
 // GBP: GBP
+
+
+//? CHALLENGE
+const checkDogs = function (dogsJulia, dogsKate) {
+  const juliaFindings = dogsJulia.slice();
+  juliaFindings.splice(0, 1); //0 is the start of where to delete and 1 is the delete count that is the number of things to delete
+  juliaFindings.splice(-2);
+  const addDogs = juliaFindings.concat(dogsKate);
+
+  addDogs.forEach(function (addDog, i, _arr) {
+    let ageCheck = addDog >= 3 ? 'adult' : 'puppy';
+    console.log(`Dog number ${i + 1} is ${addDog >= 3 ? 'an' : 'a'} ${ageCheck} and is ${addDog} years old`);
+  });
+}
+checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
