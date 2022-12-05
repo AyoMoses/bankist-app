@@ -13,7 +13,7 @@ const account1 = {
 };
 
 const account2 = {
-  owner: 'Motolani Adelusi',
+  owner: 'Motolani Olayinka Adelusi',
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
@@ -21,21 +21,21 @@ const account2 = {
 
 
 const account3 = {
-  owner: 'Chris Otu',
+  owner: 'Christian Otu Dhikan',
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
   pin: 3333,
 };
 
 const account4 = {
-  owner: 'Samuel Adeyemo',
+  owner: 'Samuel Adeyemo Oluwatobiloba',
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
   pin: 4444,
 };
 
 const account5 = {
-  owner: 'Adetomiwa Odukoya',
+  owner: 'Adetomiwa Raphael Odukoya',
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 5555,
@@ -90,6 +90,16 @@ const displayMovements = function (movements) {
 }
 
 displayMovements(account1.movements);
+
+const createUsername = function (accs) {
+  accs.forEach(function (acc) {
+    //? we create a new property called username on each iteration mutating the object
+    acc.username = acc.owner.toLowerCase().split(' ').map(letter => letter[0]).join('');
+  })
+
+}
+createUsername(accounts);
+console.log(accounts);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -219,17 +229,17 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 
 //? USING FORECH WITH MAPS AND SETS
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-  ['NGN', 'Nigerian Naira'],
-]);
+// const currencies = new Map([
+//   ['USD', 'United States dollar'],
+//   ['EUR', 'Euro'],
+//   ['GBP', 'Pound sterling'],
+//   ['NGN', 'Nigerian Naira'],
+// ]);
 
 //? WHEN WORKING WITH MAP() FOR EACH TAKES THE  key first, value, then the entire map just like working with arrays
-currencies.forEach(function (key, value, map) {
-  console.log(`${key}: ${value}`);
-})
+// currencies.forEach(function (key, value, map) {
+//   console.log(`${key}: ${value}`);
+// })
 //returns 
 // United States dollar: USD
 // Euro: EUR
