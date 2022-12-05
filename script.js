@@ -41,7 +41,7 @@ const account5 = {
   pin: 5555,
 };
 
-const accounts = [account1, account2, account3, account4];
+const accounts = [account1, account2, account3, account4, account5];
 
 // Elements
 const labelWelcome = document.querySelector('.welcome');
@@ -97,7 +97,7 @@ displayMovements(account1.movements);
 
 
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
@@ -223,6 +223,7 @@ const currencies = new Map([
   ['USD', 'United States dollar'],
   ['EUR', 'Euro'],
   ['GBP', 'Pound sterling'],
+  ['NGN', 'Nigerian Naira'],
 ]);
 
 //? WHEN WORKING WITH MAP() FOR EACH TAKES THE  key first, value, then the entire map just like working with arrays
@@ -237,13 +238,13 @@ currencies.forEach(function (key, value, map) {
 
 //FOREACH WITH set()
 //? As it is with set() it removes the duplicate and returns the unique values alone. As objects
-const currenciesUnique = new Set(['USD', 'EUR', 'GBP', 'EUR', 'USD']);
-console.log(currenciesUnique);
+// const currenciesUnique = new Set(['USD', 'EUR', 'GBP', 'EUR', 'USD']);
+// console.log(currenciesUnique);
 
-currenciesUnique.forEach(function (value, _, map) {
-  //? note: the underscore means a throwaway variable which is not useful but needs to be there. More like a placeholder
-  console.log(`${value}: ${value}`);
-})
+// currenciesUnique.forEach(function (value, _, map) {
+//   //? note: the underscore means a throwaway variable which is not useful but needs to be there. More like a placeholder
+//   console.log(`${value}: ${value}`);
+// })
 //? RETURNS
 // USD: USD
 // EUR: EUR
@@ -251,15 +252,47 @@ currenciesUnique.forEach(function (value, _, map) {
 
 
 //? CHALLENGE
-const checkDogs = function (dogsJulia, dogsKate) {
-  const juliaFindings = dogsJulia.slice();
-  juliaFindings.splice(0, 1); //0 is the start of where to delete and 1 is the delete count that is the number of things to delete
-  juliaFindings.splice(-2);
-  const addDogs = juliaFindings.concat(dogsKate);
+// const checkDogs = function (dogsJulia, dogsKate) {
+//   const juliaFindings = dogsJulia.slice();
+//   juliaFindings.splice(0, 1); //0 is the start of where to delete and 1 is the delete count that is the number of things to delete
+//   juliaFindings.splice(-2);
+//   const addDogs = juliaFindings.concat(dogsKate);
 
-  addDogs.forEach(function (addDog, i, _arr) {
-    let ageCheck = addDog >= 3 ? 'adult' : 'puppy';
-    console.log(`Dog number ${i + 1} is ${addDog >= 3 ? 'an' : 'a'} ${ageCheck} and is ${addDog} years old`);
-  });
-}
-checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
+//   addDogs.forEach(function (addDog, i, _arr) {
+//     let ageCheck = addDog >= 3 ? 'adult' : 'puppy';
+//     console.log(`Dog number ${i + 1} is ${addDog >= 3 ? 'an' : 'a'} ${ageCheck} and is ${addDog} years old`);
+//   });
+// }
+// checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
+
+
+//? MAP FILTER REDUCE
+//? Map() works more like forEach but the main difference is that it returns a new array containing the results of applying an operation on all original array elements
+
+//? FILTER()
+//? the filter() filters for element in the original array which satisfy a certain condition. Filter returns a new array containing the array elements that passed a specified condition. Hence, elements that do not meet the condition are filtered out and not included in the new filtered array i.e [1, 2, 5, 7, 4] and check for current > 2
+
+//? REDUCE() reduce boils (reduces) all array elements down to one single value (e.g adding all elements together)
+//? reduce works like a snowball effect that keeps getting bigger as it rolls down a hill . it takes an accumulator + current index
+//? This single process has redcued the whole array into one single element 
+
+
+//? WORKING WITH Map()
+// const eurToNGN = 752;
+// const movementNGN = movements.map(function (mov) {
+//   return mov * eurToNGN;
+// });
+// map with arrow function 
+// const movementNGN = movements.map(mov => mov * eurToNGN);
+
+// the movements array is not mutated
+// console.log(movements);
+// map creates a new array hence, we store it in a variabled
+// console.log(movementNGN);
+
+//? the map() method also has access to the index and entire array like forEach 
+//? with map() you need to use the return keyword so the result gets pushed to the new array
+// const movementDescriptions = movements.map((mov, i, arr) =>
+//   `${i + 1}: You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(mov)}`
+// );
+// console.log(movementDescriptions);
