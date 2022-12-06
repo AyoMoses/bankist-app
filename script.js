@@ -306,3 +306,20 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //   `${i + 1}: You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(mov)}`
 // );
 // console.log(movementDescriptions);
+
+
+//? FILTER() - returns a boolean so, we only set conditions that return a boolean value to it and it only returns the new conditions in a new array
+
+const depositFor = movements.filter(function (mov) {
+  return mov > 0;
+});
+console.log(depositFor);
+
+// using for of loop
+// const depositByFor = [];
+// for (const mov of movements) if (mov > 0) { depositByFor.push(mov) }
+// console.log(depositByFor);
+//? the for of loop does not allow method channing unlike the array methods which help us do better logic on the go
+//? the filter method also takes the index and array
+const withdrawals = movements.filter(mov => mov < 0);
+console.log(withdrawals);
