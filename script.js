@@ -91,6 +91,14 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
+// PRINT TOTAL BALANCE
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `₦${balance}`;
+}
+calcDisplayBalance(account1.movements)
+
+
 const createUsername = function (accs) {
   accs.forEach(function (acc) {
     //? we create a new property called username on each iteration mutating the object
@@ -100,6 +108,7 @@ const createUsername = function (accs) {
 }
 createUsername(accounts);
 console.log(accounts);
+
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -323,3 +332,50 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //? the filter method also takes the index and array
 // const withdrawals = movements.filter(mov => mov < 0);
 // console.log(withdrawals);
+
+
+//? reduce()
+// const balance = movements.reduce(function (acc, cur, i, arr) {
+//   console.log(`Iteration ${i}: ${acc}`);
+//   return acc + cur;
+// }, 0)// 0 is the starting value of our accumulator. It can be any number depending on the use case
+// console.log(balance);
+
+// using forOf loop
+// let startingValue = 0;
+// for (const mov of movements) {
+//   startingValue += mov;
+//   console.log(startingValue);
+// }
+
+//? USING REDUCE() TO GET THE MAXIMUM VALUE IN A ARRAY
+// const max = movements.reduce((acc, mov) => {
+//   if (acc > mov) return acc;
+//   else return mov;
+// }, movements[0]);
+// console.log(max);
+
+
+//? CODE CHALLENGE 
+let humanAge = 0;
+const calcAverageHumanAge = function (ages) {
+  const humanAges = ages.map(age => age <= 2 ? 2 * age : 16 + age * 4);
+  console.log(humanAges);
+
+  // exclude dogs < 18 that is return dogs higher than 18 years old
+  const adults = humanAges.filter(age => age >= 18);
+
+  // const averageAge = adults.reduce(function (acc, age) {
+  //   return acc + age;
+  // }, 0) / adults.length;
+  //? calculating average using the current array parameter
+  const averageAge = adults.reduce((acc, age, i, arr) => acc + age / arr.length, 0);
+  console.log(averageAge);
+  console.log(adults);
+
+  return averageAge;
+}
+const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+
+console.log(avg1, avg2);
