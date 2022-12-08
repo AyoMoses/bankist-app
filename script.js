@@ -80,7 +80,7 @@ const displayMovements = function (movements) {
     const html = `
     <div class="movements__row">
       <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
-      <div class="movements__value">${mov}</div>
+      <div class="movements__value">₦${mov}</div>
     </div>
     `
     //? containerMovements is the selector to select movements container
@@ -91,13 +91,29 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
-// PRINT TOTAL BALANCE
+//? PRINT TOTAL BALANCE
 const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
   labelBalance.textContent = `₦${balance}`;
 }
-calcDisplayBalance(account1.movements)
+calcDisplayBalance(account1.movements);
 
+//? display summary of deposit, withdrawal, and interest
+//! note: chaining methods that mutate like the splice and reverse methods should not be done in huge applications but can be done in small applications
+const calcDisplaySummary = function (movements) {
+  const totalDeposit = movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `₦${totalDeposit}`;
+
+  const totalDebit = movements.filter(mov => mov < 0).reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `₦${Math.abs(totalDebit)}`;
+
+  const totalInterest = movements.filter(mov => mov > 0).map(interest => interest * 1.2 / 100).filter((interest, i, arr) => {
+    console.log(arr);
+    return interest >= 1;
+  }).reduce((acc, mov) => acc + mov, 0);
+  labelSumInterest.textContent = `₦${totalInterest}`
+}
+calcDisplaySummary(account1.movements);
 
 const createUsername = function (accs) {
   accs.forEach(function (acc) {
@@ -357,25 +373,33 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 
 //? CODE CHALLENGE 
-let humanAge = 0;
-const calcAverageHumanAge = function (ages) {
-  const humanAges = ages.map(age => age <= 2 ? 2 * age : 16 + age * 4);
-  console.log(humanAges);
+// const calcAverageHumanAge = function (ages) {
+//   const humanAges = ages.map(age => age <= 2 ? 2 * age : 16 + age * 4);
+//   console.log(humanAges);
 
-  // exclude dogs < 18 that is return dogs higher than 18 years old
-  const adults = humanAges.filter(age => age >= 18);
+//   // exclude dogs < 18 that is return dogs higher than 18 years old
+//   const adults = humanAges.filter(age => age >= 18);
 
-  // const averageAge = adults.reduce(function (acc, age) {
-  //   return acc + age;
-  // }, 0) / adults.length;
-  //? calculating average using the current array parameter
-  const averageAge = adults.reduce((acc, age, i, arr) => acc + age / arr.length, 0);
-  console.log(averageAge);
-  console.log(adults);
+//   // const averageAge = adults.reduce(function (acc, age) {
+//   //   return acc + age;
+//   // }, 0) / adults.length;
+//   //? calculating average using the current array parameter
+//   const averageAge = adults.reduce((acc, age, i, arr) => acc + age / arr.length, 0);
+//   console.log(averageAge);
+//   console.log(adults);
 
-  return averageAge;
-}
+//   return averageAge;
+// }
+const calcAverageHumanAge = ages => ages.map(age => age <= 2 ? 2 * age : 16 + age * 4).filter(age => age >= 18).reduce((acc, age, i, arr) => acc + age / arr.length, 0);
+
 const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
 const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
 
 console.log(avg1, avg2);
+
+//? Method chaining example
+// const eurToNGN = 752;
+// const totalDepositNGN = movements.filter(mov => mov > 0).map(mov => mov * eurToNGN).reduce((acc, mov) => acc + mov, 0);
+// console.log(totalDepositNGN);
+
+//! NOTE: reduce() returns a value and chaining after that is impossible. Except for map() and filter() who return an array so, we can still keep on chaining the method to achieve certain results in our code
