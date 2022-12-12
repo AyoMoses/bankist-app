@@ -390,12 +390,12 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 //   return averageAge;
 // }
-const calcAverageHumanAge = ages => ages.map(age => age <= 2 ? 2 * age : 16 + age * 4).filter(age => age >= 18).reduce((acc, age, i, arr) => acc + age / arr.length, 0);
+// const calcAverageHumanAge = ages => ages.map(age => age <= 2 ? 2 * age : 16 + age * 4).filter(age => age >= 18).reduce((acc, age, i, arr) => acc + age / arr.length, 0);
 
-const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
-const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+// const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+// const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
 
-console.log(avg1, avg2);
+// console.log(avg1, avg2);
 
 //? Method chaining example
 // const eurToNGN = 752;
@@ -403,3 +403,28 @@ console.log(avg1, avg2);
 // console.log(totalDepositNGN);
 
 //! NOTE: reduce() returns a value and chaining after that is impossible. Except for map() and filter() who return an array so, we can still keep on chaining the method to achieve certain results in our code
+
+
+//? THE FIND METHOD 
+// WE USE  the find() method to retrieve ONE ELEMENT of an array based on a condition
+// the find method also receives a callback function that will be called as the method loops over the array
+//? the find() method just like the filter() method returns a boolean
+//? but unlike the filter, the find method DOES NOT RETURN a new array but it returns the first element in the array that satisfies the condition set
+
+//? the find method returns the first element - element alone without an array more like a value --- while the filter returns a whole array with the conditions
+
+// const firstWidthdrawal = movements.find(mov => mov < 0);
+// console.log(firstWidthdrawal);
+
+// console.log(accounts);
+
+// const findAccount = accounts.find(acc => acc.owner === 'Motolani Olayinka Adelusi');
+// console.log(findAccount);
+
+// for (const acc of accounts) {
+//   if (acc.owner === 'Motolani Olayinka Adelusi') {
+//     console.log(acc);
+//   } else {
+//     console.log('undefined');
+//   }
+// }
