@@ -6,14 +6,14 @@
 
 // Data
 const account1 = {
-  owner: 'Ayo Odukoya',
+  owner: 'Ayo Odukoya', //ao
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
   pin: 1111,
 };
 
 const account2 = {
-  owner: 'Motolani Olayinka Adelusi',
+  owner: 'Motolani Olayinka Adelusi', // moa
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
@@ -21,14 +21,14 @@ const account2 = {
 
 
 const account3 = {
-  owner: 'Christian Otu Dhikan',
+  owner: 'Christian Otu Dhikan', // cod
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
   pin: 3333,
 };
 
 const account4 = {
-  owner: 'Samuel Adeyemo Oluwatobiloba',
+  owner: 'Samuel Oluwatobiloba Adeyemo', //soa
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
   pin: 4444,
@@ -89,31 +89,27 @@ const displayMovements = function (movements) {
   })
 }
 
-displayMovements(account1.movements);
-
 //? PRINT TOTAL BALANCE
 const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
   labelBalance.textContent = `₦${balance}`;
 }
-calcDisplayBalance(account1.movements);
 
 //? display summary of deposit, withdrawal, and interest
 //! note: chaining methods that mutate like the splice and reverse methods should not be done in huge applications but can be done in small applications
-const calcDisplaySummary = function (movements) {
-  const totalDeposit = movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
+const calcDisplaySummary = function (acc) {
+  const totalDeposit = acc.movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = `₦${totalDeposit}`;
 
-  const totalDebit = movements.filter(mov => mov < 0).reduce((acc, mov) => acc + mov, 0);
+  const totalDebit = acc.movements.filter(mov => mov < 0).reduce((acc, mov) => acc + mov, 0);
   labelSumOut.textContent = `₦${Math.abs(totalDebit)}`;
 
-  const totalInterest = movements.filter(mov => mov > 0).map(interest => interest * 1.2 / 100).filter((interest, i, arr) => {
+  const totalInterest = acc.movements.filter(mov => mov > 0).map(interest => interest * acc.interestRate / 100).filter((interest, i, arr) => {
     console.log(arr);
     return interest >= 1;
   }).reduce((acc, mov) => acc + mov, 0);
   labelSumInterest.textContent = `₦${totalInterest}`
 }
-calcDisplaySummary(account1.movements);
 
 const createUsername = function (accs) {
   accs.forEach(function (acc) {
@@ -125,6 +121,38 @@ const createUsername = function (accs) {
 createUsername(accounts);
 console.log(accounts);
 
+// Event handlers
+let currentAccount;
+
+btnLogin.addEventListener('click', function (e) {
+  //? the default action of a button in form is to submit hence we prevent its default thereby, running our needed action
+  e.preventDefault();
+
+  currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
+  console.log(currentAccount);
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Dispay UI and welcome message. 
+    //? Then we take the firstname by splitting and getting the first [0] 
+    labelWelcome.textContent = `Welcome back ${currentAccount.owner.split(' ')[0]}`;
+    containerApp.style.opacity = 1;
+
+    //? clear the input fields
+    // the assignment operator works from right to left hence we use a short hand as it runs the first opertor from the right it turns to an empty string for the left
+    inputLoginUsername.value = inputLoginPin.value = '';
+    // remove cursor from input
+    inputLoginPin.blur(); 
+
+    // Display movements
+    displayMovements(currentAccount.movements);
+    // Display balance
+    calcDisplayBalance(currentAccount.movements);
+    // Display summary
+    calcDisplaySummary(currentAccount);
+
+    console.log('pin correct');
+  }
+})
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
