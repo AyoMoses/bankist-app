@@ -90,9 +90,10 @@ const displayMovements = function (movements) {
 }
 
 //? PRINT TOTAL BALANCE
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `₦${balance}`;
+const calcDisplayBalance = function (acc) {
+  // we create a new property to hold the current account balance
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `₦${acc.balance}`;
 }
 
 //? display summary of deposit, withdrawal, and interest
@@ -105,7 +106,7 @@ const calcDisplaySummary = function (acc) {
   labelSumOut.textContent = `₦${Math.abs(totalDebit)}`;
 
   const totalInterest = acc.movements.filter(mov => mov > 0).map(interest => interest * acc.interestRate / 100).filter((interest, i, arr) => {
-    console.log(arr);
+    // console.log(arr);
     return interest >= 1;
   }).reduce((acc, mov) => acc + mov, 0);
   labelSumInterest.textContent = `₦${totalInterest}`
@@ -119,7 +120,17 @@ const createUsername = function (accs) {
 
 }
 createUsername(accounts);
-console.log(accounts);
+// console.log(accounts);
+
+// Update the UI by making use of the different codes
+const updateUI = function (acc) {
+  // Display movements
+  displayMovements(acc.movements);
+  // Display balance
+  calcDisplayBalance(acc);
+  // Display summary
+  calcDisplaySummary(acc);
+}
 
 // Event handlers
 let currentAccount;
@@ -141,18 +152,36 @@ btnLogin.addEventListener('click', function (e) {
     // the assignment operator works from right to left hence we use a short hand as it runs the first opertor from the right it turns to an empty string for the left
     inputLoginUsername.value = inputLoginPin.value = '';
     // remove cursor from input
-    inputLoginPin.blur(); 
+    inputLoginPin.blur();
 
-    // Display movements
-    displayMovements(currentAccount.movements);
-    // Display balance
-    calcDisplayBalance(currentAccount.movements);
-    // Display summary
-    calcDisplaySummary(currentAccount);
+    // Update UI 
+    updateUI(currentAccount);
 
     console.log('pin correct');
   }
-})
+});
+
+// Tranfer amount 
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(acc => acc.username === inputTransferTo.value);
+  // console.log(`${currentAccount.owner} initiated transfer of ₦${amount}, to ${receiverAcc.owner}`);
+  inputTransferAmount.value = inputTransferTo.value = '';
+  inputTransferTo.blur();
+  inputTransferAmount.blur();
+
+
+  if (amount > 0 && receiverAcc
+    && currentAccount.balance >= amount && receiverAcc?.username !== currentAccount.username) {
+    // Doing the transfer
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+
+    // Update UI 
+    updateUI(currentAccount);
+  }
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
