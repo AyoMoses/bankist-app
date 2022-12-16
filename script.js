@@ -183,6 +183,39 @@ btnTransfer.addEventListener('click', function (e) {
   }
 });
 
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+
+
+  // check for correct credentials - if user and pin = input value
+  // const user = accounts.find(acc => acc.username === inputCloseUsername.value && Number(inputClosePin.value));
+  // console.log('details correct after check');
+
+  if (inputCloseUsername.value === currentAccount.username && Number(inputClosePin.value) === currentAccount.pin) {
+    //? The findindex returns the first index that returns true and not the element itself unlike find()
+    const index = accounts.findIndex(acc => acc.username === currentAccount.username);
+    console.log(index);
+
+    // Delete account 
+    accounts.splice(index, 1);
+
+    // Hide the UI
+    containerApp.style.opacity = 0;
+
+    //! PERSONAL TASK - SHOW ERROR MESSAGE ALERT WHEN USER IS DELETED AND LOGIN IS ATTEMPTED - THIS WILL BE A CHECK IN THE LOGIN FIELDS by checking for 'undefined' in input value
+
+    // some and every
+  }
+
+  //? find and findIndex were added in ES6 and old browsers will not run them
+
+  // put this after the if else statement to prevent bug setting the input to empty before if else even runs
+  inputCloseUsername.value = inputClosePin.value = '';
+  inputClosePin.blur();
+
+  console.log(accounts);
+})
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
