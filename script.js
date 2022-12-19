@@ -183,6 +183,31 @@ btnTransfer.addEventListener('click', function (e) {
   }
 });
 
+//request loan
+// will only grant loan if there's atleast one deposit with at least 10% of the requested loan amount
+//? for example, you can only request for a loan within 10% of current deposit in account. If you have 3k in account, you can only get 30k
+
+//Todo: TodoTask, display error message alert when loan requested is beyond highest depost in account
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  
+  const amount = Number(inputLoanAmount.value);
+  //0.1 is 10 percent
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    // add movement
+    currentAccount.movements.push(amount);
+
+    // update UI
+    updateUI(currentAccount);
+
+    console.log('loan approved - check total balance, deposit and inflow');
+  }
+  inputLoanAmount.value = '';
+})
+
+
+// close account
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -518,3 +543,29 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //     console.log('undefined');
 //   }
 // }
+
+
+//? Some and Every
+// some and every tests for a condition and enables us to write better logic unlike includes that tests for a single condition and thats where the some method comes into play
+// CHECKS FOR EQUALITY
+// console.log(movements.includes(-10));
+
+// SOME
+// CAN SPECIFY CONDITION - if there is ANY value for which condition is true
+// const checkSome = movements.some(mov => mov > 0);
+// console.log(checkSome);
+
+
+// EVERY
+//? Every returns true if ALL the conditions we pass into the array returns true
+// console.log(movements.every(mov => mov > 0));
+// the above returns false since not all our movements are deposits alone
+// console.log(account4.movements.every(mov => mov > 0));
+// the above returns true since all our movements are deposits alone
+
+
+//? TIP we can also pass the same function to a callback if its being reused
+// const example = mov => mov > 0;
+// movements.every(example);
+// movements.some(example);
+// movements.filter(example);
