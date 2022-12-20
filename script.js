@@ -105,7 +105,7 @@ const calcDisplaySummary = function (acc) {
   const totalDebit = acc.movements.filter(mov => mov < 0).reduce((acc, mov) => acc + mov, 0);
   labelSumOut.textContent = `₦${Math.abs(totalDebit)}`;
 
-  const totalInterest = acc.movements.filter(mov => mov > 0).map(interest => interest * acc.interestRate / 100).filter((interest, i, arr) => {
+  const totalInterest = acc.movements.filter(mov => mov > 0).map(interest => interest * acc.interestRate / 100).filter((interest, _i, _arr) => {
     // console.log(arr);
     return interest >= 1;
   }).reduce((acc, mov) => acc + mov, 0);
@@ -191,7 +191,7 @@ btnTransfer.addEventListener('click', function (e) {
 
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
-  
+
   const amount = Number(inputLoanAmount.value);
   //0.1 is 10 percent
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
@@ -569,3 +569,25 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // movements.every(example);
 // movements.some(example);
 // movements.filter(example);
+
+
+//? Flat and FlatMap
+// flat() Returns a new array with all sub-array elements concatenated into it recursively up to the specified depth.
+// the flat method puts different array inside one array
+// const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+// console.log(arr.flat());
+
+// flat only runs by 1 depth of the array meaning deeply nested arrays are not flattened hence, we specify the DEPTH
+// const arrDeep = [[1, [2, 3]], [4, [5, 6]], 7, 8];
+// console.log(arrDeep.flat(2)); // we go two levels deep
+
+// const newAcc = accounts.map(acc => acc.movements).flat().reduce((acc, mov) => acc + mov, 0);
+
+// console.log(newAcc);
+
+//? looking at the example above, we use map to get our movements data out to a new array then flatten it. For better performance, the flatMap was created
+//?FlatMap()
+// const newAcc2 = accounts.flatMap(acc => acc.movements).reduce((acc, mov) => acc + mov, 0);
+// console.log(newAcc2);
+// it first map over the original array then flattens it
+//? Note: the flatMap only goes one level deep and if we need to go more than one level then the approach of using map then flat to state the depth is needed.
