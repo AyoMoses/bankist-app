@@ -69,12 +69,16 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (movements) {
+// default parameter as FALSE --- when sorting is clicked, it becomes true
+const displayMovements = function (movements, sort = false) {
   // this gets the whole HTML child nodes 
   containerMovements.innerHTML = '';
   //? it works just like textContent = '' that takes just the text node alone
 
-  movements.forEach(function (mov, i) {
+  //? in this case to continue method chaining, we use slice to get a copy of the movements array instead of the spread operator.
+  const sortDisplay = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  sortDisplay.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -239,7 +243,17 @@ btnClose.addEventListener('click', function (e) {
   inputClosePin.blur();
 
   console.log(accounts);
-})
+});
+
+// Sort movements on click
+// we need to preserve the state of the button. to determine when we need to revert to default state of false
+let sortedState = false;
+//? adding ! to sorted state means we switch between true and false on click
+btnSort.addEventListener('click', function(e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sortedState);
+  sortedState = !sortedState; // this line allow everything to work
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -591,3 +605,41 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // console.log(newAcc2);
 // it first map over the original array then flattens it
 //? Note: the flatMap only goes one level deep and if we need to go more than one level then the approach of using map then flat to state the depth is needed.
+
+
+//? Sorting() in javaScript. It mutates the original array and arranges elements alphabetically if need be. By default it does the sorting by strings. It converts elements to strings then sorts by default
+// Strings
+const owners = ['Ayo', 'Motolani', 'Chris', 'Samuel'];
+
+// Numbers
+// if we return < 0 then  A will be before B (keep order)
+// if we return > 0 then, B will be before A (switch order)
+//? ASCENDING ORDER
+// console.log(movements.sort((a, b) => {
+//   // sort by ascending order
+//   if (a > b) return 1; // or write it like so a > b and a < b
+//   if (b > a) return -1;
+// }));
+// console.log(owners.sort((a, b) => {
+//   if (a > b) return 1;
+//   if (b > a) return -1;
+// }));
+// movements.sort((a, b) => a - b);
+// console.log(movements);
+// owners.sort((a, b) => a - b);
+// console.log(owners);
+
+//? DESCENDING ORDER
+// console.log(movements.sort((a, b) => {
+//   // sort by ascending order
+//   if (a < b) return 1;
+//   if (b < a) return -1;
+// }));
+// movements.sort((a, b) => b - a); // optimize the code
+// console.log(movements);
+// owners.sort((a, b) => b - a);
+// console.log(owners);
+// console.log(owners.sort((a, b) => {
+//   if (a < b) return 1;
+//   if (b < a) return -1;
+// }));
