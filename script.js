@@ -249,7 +249,7 @@ btnClose.addEventListener('click', function (e) {
 // we need to preserve the state of the button. to determine when we need to revert to default state of false
 let sortedState = false;
 //? adding ! to sorted state means we switch between true and false on click
-btnSort.addEventListener('click', function(e) {
+btnSort.addEventListener('click', function (e) {
   e.preventDefault();
   displayMovements(currentAccount.movements, !sortedState);
   sortedState = !sortedState; // this line allow everything to work
@@ -609,7 +609,7 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 //? Sorting() in javaScript. It mutates the original array and arranges elements alphabetically if need be. By default it does the sorting by strings. It converts elements to strings then sorts by default
 // Strings
-const owners = ['Ayo', 'Motolani', 'Chris', 'Samuel'];
+// const owners = ['Ayo', 'Motolani', 'Chris', 'Samuel'];
 
 // Numbers
 // if we return < 0 then  A will be before B (keep order)
@@ -643,3 +643,40 @@ const owners = ['Ayo', 'Motolani', 'Chris', 'Samuel'];
 //   if (a < b) return 1;
 //   if (b < a) return -1;
 // }));
+
+
+// How to programtically create and fill arrays
+// const arr = [1, 2, 3, 4, 5, 6, 6, 7];
+// const x = new Array(7);
+// console.log(x.fill(1, 3, 5)); // the fill method programtically adds new index to an array the first arguement is for the data to add, the second is start and the last is the end. It can also take a single value alone which is what will fill the entire array.
+
+//? Array.from() is a new array method created
+//? we use the .from on the Array construction - new Array()
+//? The array new Array is a function and we call the .from() METHOD on it
+// const y = Array.from({ length: 7 }, () => 1);
+// console.log(y);
+
+// const z = Array.from({ length: 7 }, ((_, i) => i + 1));
+// console.log(z);
+
+// const random = Array.from({ length: 101 }, () => Math.floor(Math.random() * (100 + 1)));
+// console.log(random);
+
+
+// function getRandomInt(min, max) {
+//   min = Math.ceil(min);
+//   max = Math.floor(max);
+//   return Math.floor(Math.random() * (max - min + 1)) + min;
+// }
+
+// const randomNumber = getRandomInt(1, 100);
+
+
+//? We can even use Array.from() on Iterables like Map() and Set()
+//? Also, we can use this for .querySelectorAll() to get data FROM the UI
+//? we were able to convert a DOM node to an array
+
+// labelBalance.addEventListener('click', function () {
+//   const MovementsUI = Array.from(document.querySelectorAll('.movements__value'), el => Number(el.textContent.replace('₦', '')));
+//   console.log(MovementsUI);
+// });
