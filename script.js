@@ -680,3 +680,41 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //   const MovementsUI = Array.from(document.querySelectorAll('.movements__value'), el => Number(el.textContent.replace('₦', '')));
 //   console.log(MovementsUI);
 // });
+
+
+// ARRAY METHOD PRACTICES 
+//? EXERCEISE 1
+//! you got this
+// const bankDeposits = accounts.flatMap(account => account.movements).filter(deposit => deposit > 0).reduce((totalDeposit, account) => totalDeposit + account, 0);
+// console.log(bankDeposits);
+
+//? EXERCISE 2
+//! you almost got this
+// COUNT THE AMOUNT OF DEPOST IN THE BANK WITH AT LEAST ONE THOUSAND NAIRA
+// const numDeposits = accounts.flatMap((acc) => acc.movements).filter((acc, i) => acc >= 1000).length; // 9 deposits
+// console.log(numDeposits);
+
+//!Count using reduce()
+
+// const numDepositsWithReduce = accounts.flatMap((acc) => acc.movements).reduce((count, cur) => (cur >= 1000 ? count + 1 : count), 0);
+// console.log(numDepositsWithReduce);
+
+//? 3
+//? CREATING A BRAND NEW OBJECT USING THE REDUCE METHOD
+//? CREATE A BRAND NEW OBJECT THAT CONTAINS THE SUM OF THE DEPOSITS AND WITHDRAWALS
+// we create new objects (deposit and withdrawal) and each iteration we push in based on condition
+// create a new object
+// reduce boild down an array to a value yet we can for an object
+// CALCULATE TO SUMS AT THE SAME TIME OR PERFORM TWO AT A TIME USING RECUCE()
+//? THE initial value of the accumulator has to be an object since we are creating an object
+
+// we can destructure our deposits and withdrawals by changing it from const sum. SO WE HAVE ACCESS TO THE DIFFERENT DATA
+const { deposit, withdrawal } = accounts.flatMap((acc) => acc.movements).reduce((sums, cur) => {
+  // we access the accumulator values of dep and withd to add based on the condition of if its higher than zero or below. we then add the current value to the acc at each iteration +=
+  // as we have a function with curley braces we have to return the accumulator from the function - arrow returns implicitly and not explicitly
+  // cur > 0 ? (sums.deposit += cur) : (sums.withdrawal += cur);
+  //? THE ABOVE CAN BE WRITTEN LIKE BELOW
+  sums[cur > 0 ? 'deposit' : 'withdrawal'] += cur;
+  return sums;
+}, { deposit: 0, withdrawal: 0 });// deposit and withd are our accumulator since they are the initial value of our reducer
+console.log(deposit, withdrawal);
