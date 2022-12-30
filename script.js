@@ -718,3 +718,23 @@ const { deposit, withdrawal } = accounts.flatMap((acc) => acc.movements).reduce(
   return sums;
 }, { deposit: 0, withdrawal: 0 });// deposit and withd are our accumulator since they are the initial value of our reducer
 console.log(deposit, withdrawal);
+
+// const { credit, debit } = accounts.flatMap(acc => acc.movements).reduce(function (total, cur) {
+//   total[cur > 0 ? 'credit' : 'debit'] += cur;
+//   return total;
+// }, { credit: 0, debit: 0 });
+// console.log(`${credit} is a credit and`, `${debit} is the debit`);
+
+// 4. Convert string to TitleCase
+const convertTitle = function (title) {
+
+  const capitalize = str => str[0].toUpperCase() + str.slice(1);
+
+  const exceptions = ['a', 'and', 'an', 'am', 'the', 'but', 'or', 'on', 'in', 'with'];
+  const titleCase = title.toLowerCase().split(' ').map(word => exceptions.includes(word) ? word : capitalize(word)).join(' ');
+
+  return capitalize(titleCase);
+}
+console.log(convertTitle('I AM a StrinG'));
+console.log(convertTitle('yes you are anD we Know'));
+console.log(convertTitle('but will make YOU title case'));
