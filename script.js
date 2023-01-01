@@ -7,7 +7,7 @@
 // Data
 const account1 = {
   owner: 'Ayo Odukoya', //ao
-  movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+  movements: [200000, 450, -400, 3000, -650, -130, 70, 13000],
   interestRate: 1.2, // %
   pin: 1111,
   movementsDates: [
@@ -26,7 +26,7 @@ const account1 = {
 
 const account2 = {
   owner: 'Motolani Olayinka Adelusi', // moa
-  movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
+  movements: [50000000, 7400, -150, -790, -3210, -1000, 80500, -30],
   interestRate: 1.5,
   pin: 2222,
   movementsDates: [
@@ -83,8 +83,8 @@ const account4 = {
 };
 
 const account5 = {
-  owner: 'Adetomiwa Raphael Odukoya',
-  movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
+  owner: 'Adetomiwa Raphael Odukoya', //aro
+  movements: [5000, 3400, -150, -790, -3210, -10000, 8500, -30000],
   interestRate: 1.5,
   pin: 5555,
   movementsDates: [
@@ -129,6 +129,9 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+// format movements with comma
+const formatMovements = amount => amount.toLocaleString();
+
 // default parameter as FALSE --- when sorting is clicked, it becomes true
 const displayMovements = function (movements, sort = false) {
   // this gets the whole HTML child nodes 
@@ -144,7 +147,7 @@ const displayMovements = function (movements, sort = false) {
     const html = `
     <div class="movements__row">
       <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
-      <div class="movements__value">₦${mov}</div>
+      <div class="movements__value">₦${formatMovements(mov)}</div>
     </div>
     `
     //? containerMovements is the selector to select movements container
@@ -157,23 +160,24 @@ const displayMovements = function (movements, sort = false) {
 const calcDisplayBalance = function (acc) {
   // we create a new property to hold the current account balance
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `₦${acc.balance}`;
+  labelBalance.textContent = `₦${formatMovements(acc.balance)}`;
 }
 
 //? display summary of deposit, withdrawal, and interest
 //! note: chaining methods that mutate like the splice and reverse methods should not be done in huge applications but can be done in small applications
 const calcDisplaySummary = function (acc) {
   const totalDeposit = acc.movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `₦${totalDeposit}`;
+  labelSumIn.textContent = `₦${formatMovements(totalDeposit)}`;
 
   const totalDebit = acc.movements.filter(mov => mov < 0).reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `₦${Math.abs(totalDebit)}`;
+  labelSumOut.textContent = `₦${formatMovements(totalDebit)}`;
+
 
   const totalInterest = acc.movements.filter(mov => mov > 0).map(interest => interest * acc.interestRate / 100).filter((interest, _i, _arr) => {
     // console.log(arr);
     return interest >= 1;
   }).reduce((acc, mov) => acc + mov, 0);
-  labelSumInterest.textContent = `₦${totalInterest}`
+  labelSumInterest.textContent = `₦${formatMovements(totalInterest)}`
 }
 
 const createUsername = function (accs) {
@@ -318,10 +322,10 @@ btnSort.addEventListener('click', function (e) {
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
+
+
+
 // LECTURES
-
-
-
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
@@ -866,26 +870,32 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 //? we can convert string to number doing 
 //? We convert string to number using Number() and + before the string number
-console.log(Number(23));
+// console.log(Number(23));
 // we can also convert string to number by adding '+' hence, js performs a type coercion
-console.log(+'23');
+// console.log(+'23');
 
 //? Parsing
 //? parse interger
-console.log(Number.parseInt('30px', 10)); //the number has to come b4 the string else NaN
+// console.log(Number.parseInt('30px', 10)); //the number has to come b4 the string else NaN
 
 //? Go to when you need to read a value coming from css. it removes the string
-console.log(Number.parseFloat('2.5rem'));
+// console.log(Number.parseFloat('2.5rem'));
 // the below is a old school way to write it now we use Number() as namespace to it
-console.log(Number.parseFloat('2.5rem'));
+// console.log(Number.parseFloat('2.5rem'));
 
 // Check if a value its NaN
-console.log(Number.isNaN(20)); // false
-console.log(Number.isNaN('20')); // true
+// console.log(Number.isNaN(20)); // false
+// console.log(Number.isNaN('20')); // true
 
 // Check if to check if something is a number or NaN
 //? Your goto to check if a value is a number
-console.log(Number.isFinite(10)); // returns true
-console.log(Number.isFinite('10')); // returns false
-console.log(Number.isFinite('10p')); // returns false
-console.log(Number.isFinite(20 / 3)); // returns true cos this returns infinity
+// console.log(Number.isFinite(10)); // returns true
+// console.log(Number.isFinite('10')); // returns false
+// console.log(Number.isFinite('10p')); // returns false
+// console.log(Number.isFinite(20 / 3)); // returns true cos this returns infinity
+
+
+//? Math and Rounding
+console.log(Math.sqrt(25)); // 5
+console.log(25 ** (1 / 2)); // same answer as 5. Explicit way of writing square root
+console.log(8 ** (1 / 3)); // check for the cubic root
