@@ -10,6 +10,18 @@ const account1 = {
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
   pin: 1111,
+  movementsDates: [
+    '2019-11-18T21:31:17.178Z',
+    '2019-12-23T07:42:02.383Z',
+    '2020-01-28T09:15:04.904Z',
+    '2020-04-01T10:17:24.185Z',
+    '2020-05-08T14:11:59.604Z',
+    '2020-05-27T17:01:17.194Z',
+    '2020-07-11T23:36:17.929Z',
+    '2020-07-12T10:51:36.790Z',
+  ],
+  currency: 'EUR',
+  locale: 'pt-PT', // de-DE
 };
 
 const account2 = {
@@ -17,6 +29,18 @@ const account2 = {
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
+  movementsDates: [
+    '2019-11-01T13:15:33.035Z',
+    '2019-11-30T09:48:16.867Z',
+    '2019-12-25T06:04:23.907Z',
+    '2020-01-25T14:18:46.235Z',
+    '2020-02-05T16:31:06.386Z',
+    '2020-04-10T14:48:26.374Z',
+    '2020-06-25T18:59:59.371Z',
+    '2020-07-26T12:08:20.894Z',
+  ],
+  currency: 'USD',
+  locale: 'en-US',
 };
 
 
@@ -25,6 +49,18 @@ const account3 = {
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
   pin: 3333,
+  movementsDates: [
+    '2021-11-01T13:11:33.035Z',
+    '2018-11-30T09:18:16.867Z',
+    '2021-12-25T06:05:23.907Z',
+    '2018-01-25T14:19:46.235Z',
+    '2021-02-05T16:35:06.386Z',
+    '2020-04-10T14:44:26.374Z',
+    '2019-06-25T18:42:59.371Z',
+    '2018-07-26T12:09:20.894Z',
+  ],
+  currency: 'NGN',
+  locale: 'en-NG',
 };
 
 const account4 = {
@@ -32,6 +68,18 @@ const account4 = {
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
   pin: 4444,
+  movementsDates: [
+    '2022-11-01T13:15:33.035Z',
+    '2019-11-30T09:18:16.867Z',
+    '2022-12-25T06:04:23.907Z',
+    '2021-01-25T14:18:46.235Z',
+    '2019-02-05T16:53:06.386Z',
+    '2022-04-10T14:43:26.374Z',
+    '2020-06-25T18:29:59.371Z',
+    '2022-07-26T12:03:20.894Z',
+  ],
+  currency: 'USD',
+  locale: 'en-US',
 };
 
 const account5 = {
@@ -39,6 +87,18 @@ const account5 = {
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 5555,
+  movementsDates: [
+    '2022-11-01T13:15:33.035Z',
+    '2022-11-30T09:48:16.867Z',
+    '2022-12-25T06:04:23.907Z',
+    '2022-01-25T14:18:46.235Z',
+    '2022-02-05T16:33:06.386Z',
+    '2021-04-10T14:43:26.374Z',
+    '2021-06-25T18:49:59.371Z',
+    '2021-07-26T12:01:20.894Z',
+  ],
+  currency: 'NGN',
+  locale: 'en-NG',
 };
 
 const accounts = [account1, account2, account3, account4, account5];
@@ -789,5 +849,11 @@ console.log(dogs.filter(checkEatingOkay));
 
 // Chalenge 0.8
 // a and b in this instance automiatically become the objects we want to sort hence, we can have access to the object data we need
-const dogSortedCopy = dogs.slice().sort((a,b) => a.recommendedFood - b.recommendedFood);
+const dogSortedCopy = dogs.slice().sort((a, b) => a.recommendedFood - b.recommendedFood);
 console.log(dogSortedCopy);
+
+
+
+//? How numbers work in JS
+//? How to convert numbers
+//? Check if certain values are numbers
