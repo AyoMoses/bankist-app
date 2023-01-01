@@ -206,7 +206,7 @@ btnLogin.addEventListener('click', function (e) {
   currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
   console.log(currentAccount);
 
-  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+  if (currentAccount?.pin === +inputLoginPin.value) {
     // Dispay UI and welcome message. 
     //? Then we take the firstname by splitting and getting the first [0] 
     labelWelcome.textContent = `Welcome back ${currentAccount.owner.split(' ')[0]}`;
@@ -228,7 +228,7 @@ btnLogin.addEventListener('click', function (e) {
 // Tranfer amount 
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
-  const amount = Number(inputTransferAmount.value);
+  const amount = +inputTransferAmount.value; //using + is cleaner than user Number()
   const receiverAcc = accounts.find(acc => acc.username === inputTransferTo.value);
   // console.log(`${currentAccount.owner} initiated transfer of ₦${amount}, to ${receiverAcc.owner}`);
   inputTransferAmount.value = inputTransferTo.value = '';
@@ -256,7 +256,7 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = Number(inputLoanAmount.value);
+  const amount = +inputLoanAmount.value;
   //0.1 is 10 percent
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // add movement
@@ -280,7 +280,8 @@ btnClose.addEventListener('click', function (e) {
   // const user = accounts.find(acc => acc.username === inputCloseUsername.value && Number(inputClosePin.value));
   // console.log('details correct after check');
 
-  if (inputCloseUsername.value === currentAccount.username && Number(inputClosePin.value) === currentAccount.pin) {
+  //using + is cleaner than user Number()
+  if (inputCloseUsername.value === currentAccount.username && +inputClosePin.value === currentAccount.pin) {
     //? The findindex returns the first index that returns true and not the element itself unlike find()
     const index = accounts.findIndex(acc => acc.username === currentAccount.username);
     console.log(index);
@@ -806,54 +807,85 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // eating okay means the dog's current food portion is within a range 10% above and 10% above and below the recommended portion
 //? code to get 10%: current > (recommended * 0.90) && current < (recommended * 1.10)
 
-const dogs = [
-  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
-  { weight: 8, curFood: 200, owners: ['Matilda'] },
-  { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
-  { weight: 32, curFood: 340, owners: ['Michael'] },
-];
+// const dogs = [
+//   { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+//   { weight: 8, curFood: 200, owners: ['Matilda'] },
+//   { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+//   { weight: 32, curFood: 340, owners: ['Michael'] },
+// ];
 
 // Challenge 0.1
-const getPortion = dogs.forEach(function (dog) {
-  // can also use Math.trunc() to get rid of the decimal too
-  dog.recommendedFood = Math.round(dog.weight ** 0.75 * 28);
-  console.log(dog);
-});
+// const getPortion = dogs.forEach(function (dog) {
+//   // can also use Math.trunc() to get rid of the decimal too
+//   dog.recommendedFood = Math.round(dog.weight ** 0.75 * 28);
+//   console.log(dog);
+// });
 
 // Challenge 0.2
-const sarahDog = dogs.find(dog => dog.owners.includes('Sarah'));
-console.log(`Sarah's dog is eating too ${sarahDog.curFood > sarahDog.recommendedFood ? 'much' : 'little'}`);
+// const sarahDog = dogs.find(dog => dog.owners.includes('Sarah'));
+// console.log(`Sarah's dog is eating too ${sarahDog.curFood > sarahDog.recommendedFood ? 'much' : 'little'}`);
 
 
 // Challenge 0.3
-const ownersEatTooMuch = dogs.filter(dog => dog.curFood > dog.recommendedFood).flatMap(dog => dog.owners);
-const ownersEatTooLittle = dogs.filter(dog => dog.curFood < dog.recommendedFood).flatMap(dog => dog.owners);
-console.log(ownersEatTooMuch, ownersEatTooLittle);
+// const ownersEatTooMuch = dogs.filter(dog => dog.curFood > dog.recommendedFood).flatMap(dog => dog.owners);
+// const ownersEatTooLittle = dogs.filter(dog => dog.curFood < dog.recommendedFood).flatMap(dog => dog.owners);
+// console.log(ownersEatTooMuch, ownersEatTooLittle);
 
 // Challenge 0.4
-console.log(`${ownersEatTooMuch.join(' and ')}'s dogs eat too much!`);
-console.log(`${ownersEatTooLittle.join(' and ')}'s dogs eat too little!`);
+// console.log(`${ownersEatTooMuch.join(' and ')}'s dogs eat too much!`);
+// console.log(`${ownersEatTooLittle.join(' and ')}'s dogs eat too little!`);
 
 // Challenge 0.5
-console.log(dogs.some(dog => dog.curFood === dog.recommendedFood));
+// console.log(dogs.some(dog => dog.curFood === dog.recommendedFood));
 // false
 
 // Challenge 0.6 
 // FORMULAR TO CHECK EATING OKAY --- current > (recommended * 0.90) && current < (recommended * 1.10)
-const checkEatingOkay = dog => dog.curFood > (dog.recommendedFood * 0.90) && dog.curFood < (dog.recommendedFood * 1.10)
+// const checkEatingOkay = dog => dog.curFood > (dog.recommendedFood * 0.90) && dog.curFood < (dog.recommendedFood * 1.10)
 
-console.log(dogs.some(checkEatingOkay));
+// console.log(dogs.some(checkEatingOkay));
 
 // Challenge 0.7
-console.log(dogs.filter(checkEatingOkay));
+// console.log(dogs.filter(checkEatingOkay));
 
 // Chalenge 0.8
 // a and b in this instance automiatically become the objects we want to sort hence, we can have access to the object data we need
-const dogSortedCopy = dogs.slice().sort((a, b) => a.recommendedFood - b.recommendedFood);
-console.log(dogSortedCopy);
+// const dogSortedCopy = dogs.slice().sort((a, b) => a.recommendedFood - b.recommendedFood);
+// console.log(dogSortedCopy);
 
 
-
+// NUMBERS IN JS
 //? How numbers work in JS
 //? How to convert numbers
 //? Check if certain values are numbers
+
+// numbers have decimals so 23 === 23.0 returns true
+// numbers are always stored in a binary format - they consist of 0s and 1s
+// Base 10 is what we are used to 0 - 9
+// Binary base 2 are 0 - 1
+
+//? we can convert string to number doing 
+//? We convert string to number using Number() and + before the string number
+console.log(Number(23));
+// we can also convert string to number by adding '+' hence, js performs a type coercion
+console.log(+'23');
+
+//? Parsing
+//? parse interger
+console.log(Number.parseInt('30px', 10)); //the number has to come b4 the string else NaN
+
+//? Go to when you need to read a value coming from css. it removes the string
+console.log(Number.parseFloat('2.5rem'));
+// the below is a old school way to write it now we use Number() as namespace to it
+console.log(Number.parseFloat('2.5rem'));
+
+// Check if a value its NaN
+console.log(Number.isNaN(20)); // false
+console.log(Number.isNaN('20')); // true
+
+// Check if to check if something is a number or NaN
+//? Your goto to check if a value is a number
+console.log(Number.isFinite(10)); // returns true
+console.log(Number.isFinite('10')); // returns false
+console.log(Number.isFinite('10p')); // returns false
+console.log(Number.isFinite(20 / 3)); // returns true cos this returns infinity
