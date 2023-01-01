@@ -709,15 +709,15 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //? THE initial value of the accumulator has to be an object since we are creating an object
 
 // we can destructure our deposits and withdrawals by changing it from const sum. SO WE HAVE ACCESS TO THE DIFFERENT DATA
-const { deposit, withdrawal } = accounts.flatMap((acc) => acc.movements).reduce((sums, cur) => {
-  // we access the accumulator values of dep and withd to add based on the condition of if its higher than zero or below. we then add the current value to the acc at each iteration +=
-  // as we have a function with curley braces we have to return the accumulator from the function - arrow returns implicitly and not explicitly
-  // cur > 0 ? (sums.deposit += cur) : (sums.withdrawal += cur);
-  //? THE ABOVE CAN BE WRITTEN LIKE BELOW
-  sums[cur > 0 ? 'deposit' : 'withdrawal'] += cur;
-  return sums;
-}, { deposit: 0, withdrawal: 0 });// deposit and withd are our accumulator since they are the initial value of our reducer
-console.log(deposit, withdrawal);
+// const { deposit, withdrawal } = accounts.flatMap((acc) => acc.movements).reduce((sums, cur) => {
+// we access the accumulator values of dep and withd to add based on the condition of if its higher than zero or below. we then add the current value to the acc at each iteration +=
+// as we have a function with curley braces we have to return the accumulator from the function - arrow returns implicitly and not explicitly
+// cur > 0 ? (sums.deposit += cur) : (sums.withdrawal += cur);
+//? THE ABOVE CAN BE WRITTEN LIKE BELOW
+// sums[cur > 0 ? 'deposit' : 'withdrawal'] += cur;
+// return sums;
+// }, { deposit: 0, withdrawal: 0 });// deposit and withd are our accumulator since they are the initial value of our reducer
+// console.log(deposit, withdrawal);
 
 // const { credit, debit } = accounts.flatMap(acc => acc.movements).reduce(function (total, cur) {
 //   total[cur > 0 ? 'credit' : 'debit'] += cur;
@@ -726,15 +726,68 @@ console.log(deposit, withdrawal);
 // console.log(`${credit} is a credit and`, `${debit} is the debit`);
 
 // 4. Convert string to TitleCase
-const convertTitle = function (title) {
+// const convertTitle = function (title) {
 
-  const capitalize = str => str[0].toUpperCase() + str.slice(1);
+//   const capitalize = str => str[0].toUpperCase() + str.slice(1);
 
-  const exceptions = ['a', 'and', 'an', 'am', 'the', 'but', 'or', 'on', 'in', 'with'];
-  const titleCase = title.toLowerCase().split(' ').map(word => exceptions.includes(word) ? word : capitalize(word)).join(' ');
+//   const exceptions = ['a', 'and', 'an', 'am', 'the', 'but', 'or', 'on', 'in', 'with'];
+//   const titleCase = title.toLowerCase().split(' ').map(word => exceptions.includes(word) ? word : capitalize(word)).join(' ');
 
-  return capitalize(titleCase);
-}
-console.log(convertTitle('I AM a StrinG'));
-console.log(convertTitle('yes you are anD we Know'));
-console.log(convertTitle('but will make YOU title case'));
+//   return capitalize(titleCase);
+// }
+// console.log(convertTitle('I AM a StrinG'));
+// console.log(convertTitle('yes you are anD we Know'));
+// console.log(convertTitle('but will make YOU title case'));
+
+
+//? Code challenge
+// END GOAL: check if dogs are > too much or little
+// Too much means the dog's current food is > than the recommended portion eating little is <
+// eating okay means the dog's current food portion is within a range 10% above and 10% above and below the recommended portion
+//? code to get 10%: current > (recommended * 0.90) && current < (recommended * 1.10)
+
+const dogs = [
+  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+  { weight: 8, curFood: 200, owners: ['Matilda'] },
+  { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+  { weight: 32, curFood: 340, owners: ['Michael'] },
+];
+
+// Challenge 0.1
+const getPortion = dogs.forEach(function (dog) {
+  // can also use Math.trunc() to get rid of the decimal too
+  dog.recommendedFood = Math.round(dog.weight ** 0.75 * 28);
+  console.log(dog);
+});
+
+// Challenge 0.2
+const sarahDog = dogs.find(dog => dog.owners.includes('Sarah'));
+console.log(`Sarah's dog is eating too ${sarahDog.curFood > sarahDog.recommendedFood ? 'much' : 'little'}`);
+
+
+// Challenge 0.3
+const ownersEatTooMuch = dogs.filter(dog => dog.curFood > dog.recommendedFood).flatMap(dog => dog.owners);
+const ownersEatTooLittle = dogs.filter(dog => dog.curFood < dog.recommendedFood).flatMap(dog => dog.owners);
+console.log(ownersEatTooMuch, ownersEatTooLittle);
+
+// Challenge 0.4
+console.log(`${ownersEatTooMuch.join(' and ')}'s dogs eat too much!`);
+console.log(`${ownersEatTooLittle.join(' and ')}'s dogs eat too little!`);
+
+// Challenge 0.5
+console.log(dogs.some(dog => dog.curFood === dog.recommendedFood));
+// false
+
+// Challenge 0.6 
+// FORMULAR TO CHECK EATING OKAY --- current > (recommended * 0.90) && current < (recommended * 1.10)
+const checkEatingOkay = dog => dog.curFood > (dog.recommendedFood * 0.90) && dog.curFood < (dog.recommendedFood * 1.10)
+
+console.log(dogs.some(checkEatingOkay));
+
+// Challenge 0.7
+console.log(dogs.filter(checkEatingOkay));
+
+// Chalenge 0.8
+// a and b in this instance automiatically become the objects we want to sort hence, we can have access to the object data we need
+const dogSortedCopy = dogs.slice().sort((a,b) => a.recommendedFood - b.recommendedFood);
+console.log(dogSortedCopy);
