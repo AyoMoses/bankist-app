@@ -901,16 +901,18 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // console.log(25 ** (1 / 2)); // same answer as 5. Explicit way of writing square root
 // console.log(8 ** (1 / 3)); // check for the cubic root // returns 2 more like divide by 4
 
-console.log(Math.max(1, 10, 20));
-console.log(Math.min(1, 10, 20));
+// console.log(Math.max(1, 10, 20));
+// console.log(Math.min(1, 10, 20));
 // calculate the area of a circle
-console.log(Math.PI * Number.parseFloat('10px') ** 2);
+// console.log(Math.PI * Number.parseFloat('10px') ** 2);
 
 
 // generate random number
-const randomInt = (min, max) => Math.floor(Math.random() * (max - min) + 1) + min;
-console.log(randomInt(1, 100));
+// const randomInt = (min, max) => Math.floor(Math.random() * (max - min) + 1) + min;
+// console.log(randomInt(1, 100));
 
+// const getRandom = (min) => Math.floor(Math.random() * (min) + 1);
+// console.log(getRandom(99));
 
 // Rounding integers
 // console.log(Math.round(39.7)); // rounds to the nearest integer
@@ -925,13 +927,48 @@ console.log(randomInt(1, 100));
 
 
 //? Rounding floating-point numbers AKA decimals
-console.log((234).toFixed(2));
+// console.log((234).toFixed(2));
 
 //? numeric separator 
-const diameter = 287_460_000_000; // introduced in ES21 to let us know figures properly
-console.log(diameter);
+// const diameter = 287_460_000_000; // introduced in ES21 to let us know figures properly
+// console.log(diameter);
 
 //? BIG INT
 // big interger introduced in ES2020 to work with loads of numbers
-console.log(187493493849384034034903940394039402348343n);
-console.log(BigInt(98392839));
+// console.log(187493493849384034034903940394039402348343n);
+// console.log(BigInt(98392839));
+
+
+//? working with dates
+// step one -- Create a date
+// there are three ways to create a date
+// 1. create the date from the date constructor
+// const now = new Date();
+// console.log(now);
+
+// 2. Pass the date from a date string
+// console.log(new Date('Wed Jan 04 2023 16:54:00')); // but this can be unreliable
+// console.log(new Date(account1.movementsDates[0]));
+
+
+//? first date since the UNIX time in 1970
+// console.log(new Date(0));
+// console.log(new Date(3 * 24 * 60 * 60 * 1000)); // 3 days, 1 day, 60 minutes, 60 seconds times 1000 - converting to miliseconds
+// console.log(3 * 24 * 60 * 60 * 1000); // generates a timestamp of 259200000
+
+
+//? Working with dates
+const future = new Date(2037, 10, 9, 15, 23); // Mon Nov 09 2037 15:23:00 
+console.log(future);
+console.log(future.getFullYear());
+console.log(future.getMonth());
+console.log(future.getDate());
+console.log(future.getDay()); // day of the week
+console.log(future.getHours());
+console.log(future.getMinutes());
+console.log(future.getSeconds());
+console.log(future.toISOString());
+console.log(future.getTime()); // calculates the number of time since future
+console.log(Date.now());// current timestamp
+future.setFullYear(2050);
+console.log(future);
