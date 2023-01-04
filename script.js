@@ -191,7 +191,7 @@ const createUsername = function (accs) {
   accs.forEach(function (acc) {
     //? we create a new property called username on each iteration mutating the object
     acc.username = acc.owner.toLowerCase().split(' ').map(letter => letter[0]).join('');
-  })
+  });
 
 }
 createUsername(accounts);
@@ -222,7 +222,7 @@ btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
 
   currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
-  console.log(currentAccount);
+  console.log(`Account belongs to ${currentAccount.owner.split(' ')[0]}`);
 
   if (currentAccount?.pin === +inputLoginPin.value) {
     // Dispay UI and welcome message. 
@@ -987,17 +987,17 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 
 //? Working with dates
-const future = new Date(2037, 10, 9, 15, 23); // Mon Nov 09 2037 15:23:00 
-console.log(future);
-console.log(future.getFullYear());
-console.log(future.getMonth());
-console.log(future.getDate());
-console.log(future.getDay()); // day of the week
-console.log(future.getHours());
-console.log(future.getMinutes());
-console.log(future.getSeconds());
-console.log(future.toISOString());
-console.log(future.getTime()); // calculates the number of time since future
-console.log(Date.now());// current timestamp
-future.setFullYear(2050);
-console.log(future);
+// const future = new Date(2037, 10, 9, 15, 23); // Mon Nov 09 2037 15:23:00 
+// console.log(future);
+// console.log(future.getFullYear());
+// console.log(future.getMonth());
+// console.log(future.getDate());
+// console.log(future.getDay()); // day of the week
+// console.log(future.getHours());
+// console.log(future.getMinutes());
+// console.log(future.getSeconds());
+// console.log(future.toISOString());
+// console.log(future.getTime()); // calculates the number of time since future
+// console.log(Date.now());// current timestamp
+// future.setFullYear(2050);
+// console.log(future);
