@@ -190,7 +190,7 @@ const calcDisplaySummary = function (acc) {
 const createUsername = function (accs) {
   accs.forEach(function (acc) {
     //? we create a new property called username on each iteration mutating the object
-    acc.username = acc.owner.toLowerCase().split(' ').map(letter => letter[0]).join('');
+    acc.username = acc.owner.toLowerCase().split(' ').map(letter => letter[0]).join(''); 
   });
 
 }
