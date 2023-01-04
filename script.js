@@ -144,6 +144,7 @@ const displayMovements = function (movements, sort = false) {
   sortDisplay.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
+    // in front of mov we can add toFixed(2) to add two decimal numbers at the end of our value
     const html = `
     <div class="movements__row">
       <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
@@ -260,7 +261,7 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = +inputLoanAmount.value;
+  const amount = Math.floor(inputLoanAmount.value);
   //0.1 is 10 percent
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // add movement
@@ -896,6 +897,41 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 
 //? Math and Rounding
-console.log(Math.sqrt(25)); // 5
-console.log(25 ** (1 / 2)); // same answer as 5. Explicit way of writing square root
-console.log(8 ** (1 / 3)); // check for the cubic root
+// console.log(Math.sqrt(25)); // 5
+// console.log(25 ** (1 / 2)); // same answer as 5. Explicit way of writing square root
+// console.log(8 ** (1 / 3)); // check for the cubic root // returns 2 more like divide by 4
+
+console.log(Math.max(1, 10, 20));
+console.log(Math.min(1, 10, 20));
+// calculate the area of a circle
+console.log(Math.PI * Number.parseFloat('10px') ** 2);
+
+
+// generate random number
+const randomInt = (min, max) => Math.floor(Math.random() * (max - min) + 1) + min;
+console.log(randomInt(1, 100));
+
+
+// Rounding integers
+// console.log(Math.round(39.7)); // rounds to the nearest integer
+// console.log(Math.ceil(40.1)); // rounds to the nearest. This is 41
+// console.log(Math.ceil(45.1)); // rounds to the nearest. as such this is 46
+
+//? Math.floor and trunc do the same when we are dealing with positive numbers
+// console.log(Math.trunc(23.5)); // removes any decimal parts
+
+//? math floor works better than trunc since it works for both '-' and '+' numbers
+// console.log(Math.floor(23.5)); // works like trunc
+
+
+//? Rounding floating-point numbers AKA decimals
+console.log((234).toFixed(2));
+
+//? numeric separator 
+const diameter = 287_460_000_000; // introduced in ES21 to let us know figures properly
+console.log(diameter);
+
+//? BIG INT
+// big interger introduced in ES2020 to work with loads of numbers
+console.log(187493493849384034034903940394039402348343n);
+console.log(BigInt(98392839));
