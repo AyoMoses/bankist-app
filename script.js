@@ -16,9 +16,9 @@ const account1 = {
     '2020-01-28T09:15:04.904Z',
     '2020-04-01T10:17:24.185Z',
     '2020-05-08T14:11:59.604Z',
-    '2020-05-27T17:01:17.194Z',
-    '2020-07-11T23:36:17.929Z',
-    '2020-07-12T10:51:36.790Z',
+    '2020-01-04T17:01:17.194Z',
+    '2023-01-03T23:36:17.929Z',
+    '2023-01-02T10:51:36.790Z',
   ],
   currency: 'EUR',
   locale: 'pt-PT', // de-DE
@@ -132,6 +132,26 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // format movements with comma
 const formatMovements = amount => amount.toLocaleString();
 
+const formatMovementDates = function (date) {
+
+  const calcDaysPassed = (date1, date2) => Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
+  const daysPassed = calcDaysPassed(new Date(), date);
+  console.log(daysPassed);
+
+  if (daysPassed === 0) return 'Today';
+  if (daysPassed === 1) return 'Yesterday';
+  if (daysPassed === 2) return '2 days ago';
+  if (daysPassed === 3) return '3 days ago';
+  if (daysPassed <= 7) return `${daysPassed} days ago`;
+  
+  // if the above code are not executed then the below code are fall back as else
+  const day = `${date.getDate()}`.padStart(2, 0);
+  const month = `${date.getMonth() + 1}`.padStart(2, 0);
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+
+}
+
 // default parameter as FALSE --- when sorting is clicked, it becomes true
 const displayMovements = function (acc, sort = false) {
   // this gets the whole HTML child nodes 
@@ -144,10 +164,7 @@ const displayMovements = function (acc, sort = false) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const date = new Date(acc.movementsDates[i]);// on current index we get the data
-    const day = `${date.getDate()}`.padStart(2, 0);
-    const month = `${date.getMonth() + 1}`.padStart(2, 0);
-    const year = date.getFullYear();
-    const displayDate = `${day}/${month}/${year}`;
+    const displayDate = formatMovementDates(date)
 
     // in front of mov we can add toFixed(2) to add two decimal numbers at the end of our value
     const html = `
@@ -190,7 +207,7 @@ const calcDisplaySummary = function (acc) {
 const createUsername = function (accs) {
   accs.forEach(function (acc) {
     //? we create a new property called username on each iteration mutating the object
-    acc.username = acc.owner.toLowerCase().split(' ').map(letter => letter[0]).join(''); 
+    acc.username = acc.owner.toLowerCase().split(' ').map(letter => letter[0]).join('');
   });
 
 }
@@ -1001,3 +1018,11 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // console.log(Date.now());// current timestamp
 // future.setFullYear(2050);
 // console.log(future);
+
+
+const future = new Date(2037, 10, 9, 15, 23); // Mon Nov 09 2037 15:23:00
+console.log(+future);
+
+const calcDaysPassed = (date1, date2) => Math.abs(date2 - date1) / (1000 * 60 * 60 * 24);
+const days1 = calcDaysPassed(new Date(2037, 3, 14), new Date(2037, 3, 4));
+console.log(days1);
