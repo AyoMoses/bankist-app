@@ -7,7 +7,7 @@
 // Data
 const account1 = {
   owner: 'Ayo Odukoya', //ao
-  movements: [200000, 450, -400, 3000, -650, -130, 70, 13000],
+  movements: [2000, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
   pin: 1111,
   movementsDates: [
@@ -20,13 +20,13 @@ const account1 = {
     '2023-01-03T23:36:17.929Z',
     '2023-01-02T10:51:36.790Z',
   ],
-  currency: 'EUR',
-  locale: 'pt-PT', // de-DE
+  currency: 'GBP',
+  locale: 'en-GB', // de-DE
 };
 
 const account2 = {
   owner: 'Motolani Olayinka Adelusi', // moa
-  movements: [50000000, 7400, -150, -790, -3210, -1000, 80500, -30],
+  movements: [500, 7400, -150, -790, -3210, -1000, 800, -30],
   interestRate: 1.5,
   pin: 2222,
   movementsDates: [
@@ -130,26 +130,26 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 // format movements with comma
-const formatMovements = amount => amount.toLocaleString();
+const formatMovements = amount => amount.toLocaleString(); //.toFixed(2)
 
-const formatMovementDates = function (date) {
+const formatMovementDates = function (date, locale) {
 
   const calcDaysPassed = (date1, date2) => Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
   const daysPassed = calcDaysPassed(new Date(), date);
-  console.log(daysPassed);
+  // console.log(daysPassed);
 
   if (daysPassed === 0) return 'Today';
   if (daysPassed === 1) return 'Yesterday';
   if (daysPassed === 2) return '2 days ago';
   if (daysPassed === 3) return '3 days ago';
   if (daysPassed <= 7) return `${daysPassed} days ago`;
-  
-  // if the above code are not executed then the below code are fall back as else
-  const day = `${date.getDate()}`.padStart(2, 0);
-  const month = `${date.getMonth() + 1}`.padStart(2, 0);
-  const year = date.getFullYear();
-  return `${day}/${month}/${year}`;
 
+  // if the above code are not executed then the below code are fall back as else
+  // const day = `${date.getDate()}`.padStart(2, 0);
+  // const month = `${date.getMonth() + 1}`.padStart(2, 0);
+  // const year = date.getFullYear();
+  // return `${day}/${month}/${year}`;
+   return new Intl.DateTimeFormat(locale).format(date);
 }
 
 // default parameter as FALSE --- when sorting is clicked, it becomes true
@@ -164,7 +164,7 @@ const displayMovements = function (acc, sort = false) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const date = new Date(acc.movementsDates[i]);// on current index we get the data
-    const displayDate = formatMovementDates(date)
+    const displayDate = formatMovementDates(date, acc.locale);
 
     // in front of mov we can add toFixed(2) to add two decimal numbers at the end of our value
     const html = `
@@ -232,8 +232,6 @@ currentAccount = account1;
 updateUI(currentAccount);
 containerApp.style.opacity = 1;
 
-
-
 btnLogin.addEventListener('click', function (e) {
   //? the default action of a button in form is to submit hence we prevent its default thereby, running our needed action
   e.preventDefault();
@@ -247,14 +245,32 @@ btnLogin.addEventListener('click', function (e) {
     labelWelcome.textContent = `Welcome back ${currentAccount.owner.split(' ')[0]}`;
     containerApp.style.opacity = 1;
 
-    // create current date
+    // create current time and date
+
+    //? locale time and date using JS IntDateTimeFormat API
     const now = new Date();
-    const day = `${now.getDate()}`.padStart(2, 0);
-    const month = `${now.getMonth() + 1}`.padStart(2, 0);
-    const year = now.getFullYear();
-    const hour = `${now.getHours()}`.padStart(2, 0);
-    const min = `${now.getMinutes()}`.padStart(2, 0);
-    labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min}`;
+    // writing the configuration object to be passed to the DateTimeFormat object is necessary
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      day: 'numeric',
+      month: 'long', // you can also use 2-digit which shows 08 for august for example
+      year: 'numeric',
+      weekday: 'short'
+      // there is the 'short' opt which shows the string as 'mon, tue, aug, sep' for example and 'narrow' which shows it as letter alone 'M, T, A, J'
+    }
+    // const userLocale = navigator.language;
+    // console.log(userLocale);
+    labelDate.textContent = new Intl.DateTimeFormat(currentAccount.locale, options).format(now); // the value passed creates a formatter based on the language passed
+
+
+    //? manual local time and date
+    // const day = `${now.getDate()}`.padStart(2, 0);
+    // const month = `${now.getMonth() + 1}`.padStart(2, 0);
+    // const year = now.getFullYear();
+    // const hour = `${now.getHours()}`.padStart(2, 0);
+    // const min = `${now.getMinutes()}`.padStart(2, 0);
+    // labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min}`;
 
     //? clear the input fields
     // the assignment operator works from right to left hence we use a short hand as it runs the first opertor from the right it turns to an empty string for the left
@@ -335,7 +351,7 @@ btnClose.addEventListener('click', function (e) {
   if (inputCloseUsername.value === currentAccount.username && +inputClosePin.value === currentAccount.pin) {
     //? The findindex returns the first index that returns true and not the element itself unlike find()
     const index = accounts.findIndex(acc => acc.username === currentAccount.username);
-    console.log(index);
+    // console.log(index);
 
     // Delete account 
     accounts.splice(index, 1);
@@ -354,7 +370,7 @@ btnClose.addEventListener('click', function (e) {
   inputCloseUsername.value = inputClosePin.value = '';
   inputClosePin.blur();
 
-  console.log(accounts);
+  // console.log(accounts);
 });
 
 // Sort movements on click
@@ -1020,9 +1036,9 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // console.log(future);
 
 
-const future = new Date(2037, 10, 9, 15, 23); // Mon Nov 09 2037 15:23:00
-console.log(+future);
+// const future = new Date(2037, 10, 9, 15, 23); // Mon Nov 09 2037 15:23:00
+// console.log(+future);
 
-const calcDaysPassed = (date1, date2) => Math.abs(date2 - date1) / (1000 * 60 * 60 * 24);
-const days1 = calcDaysPassed(new Date(2037, 3, 14), new Date(2037, 3, 4));
-console.log(days1);
+// const calcDaysPassed = (date1, date2) => Math.abs(date2 - date1) / (1000 * 60 * 60 * 24);
+// const days1 = calcDaysPassed(new Date(2037, 3, 14), new Date(2037, 3, 4));
+// console.log(days1);
