@@ -1061,17 +1061,18 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 
 //? Int. Numbers --- working with international numbers --- READ THE DOCUMENTATION on MDN
-const num = 3884764.23;
+// const num = 3884764.23;
 // once the currency is set in style its important to create the property for it since it is not determined by locale as we do with date intl. Create the currency manually!
-const options = {
-  style: 'currency', // unit, percent
-  unit: 'mile-per-hour', //celsius 
-  currency: 'EUR',
-  // useGrouping: true, // removes the separators for numbers
-}
+// const options = {
+//   style: 'currency', // unit, percent
+//   unit: 'mile-per-hour', //celsius 
+//   currency: 'EUR',
+//   // useGrouping: true, // removes the separators for numbers
+// }
 
-console.log('US', new Intl.NumberFormat('en-US', options).format(num));
-console.log('NG', new Intl.NumberFormat('en-NG', options).format(num));
-console.log('GB', new Intl.NumberFormat('en-UK', options).format(num));
-console.log('Germany', new Intl.NumberFormat('de-DE', options).format(num));
-console.log(navigator.language, new Intl.NumberFormat(navigator.language, options).format(num));
+// console.log('US', new Intl.NumberFormat('en-US', options).format(num));
+// console.log('NG', new Intl.NumberFormat('en-NG', options).format(num));
+// console.log('GB', new Intl.NumberFormat('en-UK', options).format(num));
+// console.log('Germany', new Intl.NumberFormat('de-DE', options).format(num));
+//? navigator.language is the locale of user computer. 
+// console.log(navigator.language, new Intl.NumberFormat(navigator.language, options).format(num));
