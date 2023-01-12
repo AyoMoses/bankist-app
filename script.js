@@ -7,7 +7,7 @@
 // Data
 const account1 = {
   owner: 'Ayo Odukoya', //ao
-  movements: [200000, 450, -400, 3000, -6050, -130, 70, 13000],
+  movements: [2000000, 450, -400, 3000, -6050, -130, 70, 13000],
   interestRate: 1.2, // %
   pin: 1111,
   movementsDates: [
@@ -339,16 +339,19 @@ btnLoan.addEventListener('click', function (e) {
   const amount = Math.floor(inputLoanAmount.value);
   //0.1 is 10 percent
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+
     // add movement
-    currentAccount.movements.push(amount);
+    setTimeout(function () {
+      currentAccount.movements.push(amount);
 
-    // Add loan date
-    currentAccount.movementsDates.push(new Date().toISOString());
+      // Add loan date
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    // update UI
-    updateUI(currentAccount);
+      // update UI
+      updateUI(currentAccount);
 
-    console.log('loan approved - check total balance, deposit and inflow');
+      console.log('loan approved - check total balance, deposit and inflow')
+    },2500)
   }
   inputLoanAmount.value = '';
 })
@@ -1076,3 +1079,28 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // console.log('Germany', new Intl.NumberFormat('de-DE', options).format(num));
 //? navigator.language is the locale of user computer. 
 // console.log(navigator.language, new Intl.NumberFormat(navigator.language, options).format(num));
+
+
+//? setTimeout() -- is an example of a higher-order function that takes a call-back function that will be called by the setTimeOut function in the future by passing the number of miliseconds until the function is called
+// setTimeout(() => console.log('Here is your 🍕 order'), 3000);
+// console.log('waiting...');
+
+//? once JS gets to the timeout function, it registers the callback function and begins to countdown until the time for it to be executed has elpased and immediatley, it moves to the next line of code.
+
+// this process is called aynchronous javascript ---
+// using the arguement that comes with setTimeout
+// it can accept arrays as an argument by spreading it in or passing them as arguments
+const ingredients = ['pepper', 'maggi'];
+const amalaTimer = setTimeout((ing1, ing2) => console.log(`Here is your amala served with ${ing1} and ${ing2}`), 3000, ...ingredients);
+
+//? how to cancel a timeout by checking if it does not meet a condition then you pass the value you want to clear into clearTimeout()
+if (ingredients.includes('sugar')) clearTimeout(amalaTimer); // this code will not run since it includes one of the arrays
+
+console.log(amalaTimer);
+
+// SETTIMEOUT
+//? setTimeout function is when you want to perform an action or run a piece of code every 10 minutes or 5
+const viewTimer = setInterval(function (){
+  const now = new Date();
+  console.log(`${Intl.DateTimeFormat(navigator.language).format(now)} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`);
+}, 1500);
