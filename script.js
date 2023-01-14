@@ -240,13 +240,47 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 }
 
-// Event handlers
-let currentAccount;
+const startLogOutTimer = function () {
+  // Set time to 5 minutes
+  let time = 120; //120 seconds is 2 minutes
+
+  const tick = function () {
+    // Get minute of timer
+    // convert to a string to be able to use padstart since its a number
+    const min = String(Math.trunc(time / 60)).padStart(2, 0); // 60 seconds
+    const sec = String(time % 60).padStart(2, 0);
+
+    // In each call, print the remaining timer to the UI
+    labelTimer.textContent = `${min}:${sec}`;
+
+    //! TASK - CHANGE TEXT COLOR TO RED WHEN TIMER IS LESS THAN 1 MINUTE WHEN MIN < 1 AND BLINK IT
+
+    // When 0 seconds, stop timer and log out user
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = 'Login to get started';
+      containerApp.style.opacity = 0;
+    }
+
+    // Decrease 1s on each function call
+    time--; // timer = timer - 1;
+  }
+
+  // Call the timer every second
+  tick();
+  const timer = setInterval(tick, 1000);
+
+  // to fix the bug about timer not working in other users since more than one runs at the same time we need to return timer to have access to it
+  return timer;
+}
+
+// Event handlers. The timer variable is needed globally for the to persist across different login. Since its used in the btnLogin and other functions hence, its used as a parent scope
+let currentAccount, timer;
 
 // FAKE LOGGED IN STATE
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 1;
+// currentAccount = account1;
+// updateUI(currentAccount);
+// containerApp.style.opacity = 1;
 
 btnLogin.addEventListener('click', function (e) {
   //? the default action of a button in form is to submit hence we prevent its default thereby, running our needed action
@@ -297,6 +331,12 @@ btnLogin.addEventListener('click', function (e) {
     // Update UI 
     updateUI(currentAccount);
 
+    // check if there is already a timer running in another account and clear it
+    if (timer) clearInterval(timer);
+
+    // Start countdown timer 
+    timer = startLogOutTimer();
+
     console.log('pin correct');
   }
 });
@@ -324,6 +364,10 @@ btnTransfer.addEventListener('click', function (e) {
 
     // Update UI 
     updateUI(currentAccount);
+
+    // reset timer when user remains active doing something on the app. We clear the current time and start a new one
+    clearInterval(timer);
+    timer = startLogOutTimer();
   }
 });
 
@@ -350,8 +394,12 @@ btnLoan.addEventListener('click', function (e) {
       // update UI
       updateUI(currentAccount);
 
-      console.log('loan approved - check total balance, deposit and inflow')
-    },2500)
+      console.log('loan approved - check total balance, deposit and inflow');
+
+      // reset timer when user remains active doing something on the app. We clear the current time and start a new one
+      clearInterval(timer);
+      timer = startLogOutTimer();
+    }, 2500)
   }
   inputLoanAmount.value = '';
 })
@@ -1090,17 +1138,17 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // this process is called aynchronous javascript ---
 // using the arguement that comes with setTimeout
 // it can accept arrays as an argument by spreading it in or passing them as arguments
-const ingredients = ['pepper', 'maggi'];
-const amalaTimer = setTimeout((ing1, ing2) => console.log(`Here is your amala served with ${ing1} and ${ing2}`), 3000, ...ingredients);
+// const ingredients = ['pepper', 'maggi'];
+// const amalaTimer = setTimeout((ing1, ing2) => console.log(`Here is your amala served with ${ing1} and ${ing2}`), 3000, ...ingredients);
 
 //? how to cancel a timeout by checking if it does not meet a condition then you pass the value you want to clear into clearTimeout()
-if (ingredients.includes('sugar')) clearTimeout(amalaTimer); // this code will not run since it includes one of the arrays
+// if (ingredients.includes('sugar')) clearTimeout(amalaTimer); // this code will not run since it includes one of the arrays
 
-console.log(amalaTimer);
+// console.log(amalaTimer);
 
 // SETTIMEOUT
 //? setTimeout function is when you want to perform an action or run a piece of code every 10 minutes or 5
-const viewTimer = setInterval(function (){
-  const now = new Date();
-  console.log(`${Intl.DateTimeFormat(navigator.language).format(now)} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`);
-}, 1500);
+// const viewTimer = setInterval(function (){
+//   const now = new Date();
+//   console.log(`${Intl.DateTimeFormat(navigator.language).format(now)} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`);
+// }, 1500);
