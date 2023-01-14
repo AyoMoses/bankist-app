@@ -161,6 +161,23 @@ const formatMovementDates = function (date, locale) {
   return new Intl.DateTimeFormat(locale).format(date);
 }
 
+
+// Use time to display greeting
+const printWelcome = function (name) {
+  const now = new Date();
+  const greetings = new Map([
+    [[6, 7, 8, 9, 10], 'Good Morning'],
+    [[11, 12, 13, 14], 'Good Day'],
+    [[15, 16, 17, 18], 'Good Afternoon'],
+    [[19, 20, 21, 22], 'Good Evening'],
+    [[23, 0, 1, 2, 3, 4, 5], 'Good Night'],
+  ]);
+
+  const arr = [...greetings.keys()].find(key => key.includes(now.getHours()));
+  const greet = greetings.get(arr);
+  labelWelcome.textContent = `${greet} ${name}!`;
+}
+
 // default parameter as FALSE --- when sorting is clicked, it becomes true
 const displayMovements = function (account, sort = false) {
   // this gets the whole HTML child nodes 
@@ -290,10 +307,11 @@ btnLogin.addEventListener('click', function (e) {
   currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
   console.log(`Account belongs to ${currentAccount.owner.split(' ')[0]}`);
 
-  if (currentAccount?.pin === +inputLoginPin.value) {
+  if (currentAccount && currentAccount.pin === +inputLoginPin.value) {
     // Dispay UI and welcome message. 
     //? Then we take the firstname by splitting and getting the first [0] 
-    labelWelcome.textContent = `Welcome back ${currentAccount.owner.split(' ')[0]}`;
+    // labelWelcome.textContent = `Welcome back ${currentAccount.owner.split(' ')[0]}`;
+    printWelcome(`${currentAccount.owner.split(' ')[0]}`)
     containerApp.style.opacity = 1;
 
     // create current time and date
