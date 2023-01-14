@@ -162,23 +162,23 @@ const formatMovementDates = function (date, locale) {
 }
 
 // default parameter as FALSE --- when sorting is clicked, it becomes true
-const displayMovements = function (acc, sort = false) {
+const displayMovements = function (account, sort = false) {
   // this gets the whole HTML child nodes 
   containerMovements.innerHTML = '';
   //? it works just like textContent = '' that takes just the text node alone
   //? in this case to continue method chaining, we use slice to get a copy of the movements array instead of the spread operator.
-  const sortDisplay = sort ? acc.movements.slice().sort((a, b) => a - b) : acc.movements;
+  const sortDisplay = sort ? account.movements.slice().sort((a, b) => a - b) : account.movements;
 
   sortDisplay.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
-    const date = new Date(acc.movementsDates[i]);// on current index we get the data
+    const date = new Date(account.movementsDates[i]);// on current index we get the data
 
     // format dates using the intl. Number
-    const displayDate = formatMovementDates(date, acc.locale);
+    const displayDate = formatMovementDates(date, account.locale);
 
 
-    const formattedAmount = formatCur(mov, acc.locale, acc.currency);
+    const formattedAmount = formatCur(mov, account.locale, account.currency);
 
     // in front of mov we can add toFixed(2) to add two decimal numbers at the end of our value
     const html = `
@@ -193,6 +193,7 @@ const displayMovements = function (acc, sort = false) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   })
 }
+displayMovements(account1);
 
 //? PRINT TOTAL BALANCE
 const calcDisplayBalance = function (acc) {
@@ -247,8 +248,8 @@ const startLogOutTimer = function () {
   const tick = function () {
     // Get minute of timer
     // convert to a string to be able to use padstart since its a number
-    const min = String(Math.trunc(time / 60)).padStart(2, 0); // 60 seconds
-    const sec = String(time % 60).padStart(2, 0);
+    const min = String(Math.trunc(time / 60)).padStart(2, '0'); // 60 seconds
+    const sec = String(time % 60).padStart(2, '0');
 
     // In each call, print the remaining timer to the UI
     labelTimer.textContent = `${min}:${sec}`;
@@ -446,7 +447,7 @@ let sortedState = false;
 //? adding ! to sorted state means we switch between true and false on click
 btnSort.addEventListener('click', function (e) {
   e.preventDefault();
-  displayMovements(acc.movements, !sortedState);
+  displayMovements(currentAccount, !sortedState);
   sortedState = !sortedState; // this line allow everything to work
 });
 
