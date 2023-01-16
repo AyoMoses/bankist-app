@@ -112,6 +112,7 @@ const labelSumIn = document.querySelector('.summary__value--in');
 const labelSumOut = document.querySelector('.summary__value--out');
 const labelSumInterest = document.querySelector('.summary__value--interest');
 const labelTimer = document.querySelector('.timer');
+const lableLogoutPrompt = document.querySelector('.logout-prompt');
 
 const containerApp = document.querySelector('.app');
 const containerMovements = document.querySelector('.movements');
@@ -260,7 +261,7 @@ const updateUI = function (acc) {
 
 const startLogOutTimer = function () {
   // Set time to 5 minutes
-  let time = 120; //120 seconds is 2 minutes
+  let time = 300; //300 is 5 minutes 60seconds * 5minutes
 
   const tick = function () {
     // Get minute of timer
@@ -279,6 +280,14 @@ const startLogOutTimer = function () {
       labelWelcome.textContent = 'Login to get started';
       containerApp.style.opacity = 0;
     }
+
+    // change color of text before logout
+    const logoutPrompt = min < 1 ? 'You have less than' : 'You will be logged out in';
+    const changePromptColor = min < 1 ? 'offline' : 'online';
+    const html = `
+    <span class="logout-prompt__${changePromptColor}">${logoutPrompt}</span>
+    `
+    lableLogoutPrompt.innerHTML = html;
 
     // Decrease 1s on each function call
     time--; // timer = timer - 1;
