@@ -39,8 +39,8 @@ const account2 = {
     '2020-06-25T18:59:59.371Z',
     '2020-07-26T12:08:20.894Z',
   ],
-  currency: 'USD',
-  locale: 'en-US',
+  currency: 'GBP',
+  locale: 'en-GB',
 };
 
 
@@ -59,8 +59,8 @@ const account3 = {
     '2021-06-25T18:49:59.371Z',
     '2021-07-26T12:01:20.894Z',
   ],
-  currency: 'CAD',
-  locale: 'en-CA',
+  currency: 'GBP',
+  locale: 'en-GB',
 };
 
 
@@ -79,8 +79,8 @@ const account4 = {
     '2019-06-25T18:42:59.371Z',
     '2018-07-26T12:09:20.894Z',
   ],
-  currency: 'NGN',
-  locale: 'en-NG',
+  currency: 'GBP',
+  locale: 'en-GB',
 };
 
 const account5 = {
@@ -118,6 +118,7 @@ const containerApp = document.querySelector('.app');
 const containerMovements = document.querySelector('.movements');
 
 const btnLogin = document.querySelector('.login__btn');
+const btnLogout = document.querySelector('.logout-section__logout-button');
 const btnTransfer = document.querySelector('.form__btn--transfer');
 const btnLoan = document.querySelector('.form__btn--loan');
 const btnClose = document.querySelector('.form__btn--close');
@@ -125,6 +126,7 @@ const btnSort = document.querySelector('.btn--sort');
 
 const inputLoginUsername = document.querySelector('.login__input--user');
 const inputLoginPin = document.querySelector('.login__input--pin');
+const inputLogin = document.querySelector('.login__input');
 const inputTransferTo = document.querySelector('.form__input--to');
 const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
@@ -305,9 +307,9 @@ const startLogOutTimer = function () {
 let currentAccount, timer;
 
 // FAKE LOGGED IN STATE
-// currentAccount = account1;
-// updateUI(currentAccount);
-// containerApp.style.opacity = 1;
+currentAccount = account1;
+updateUI(currentAccount);
+containerApp.style.opacity = 1;
 
 btnLogin.addEventListener('click', function (e) {
   //? the default action of a button in form is to submit hence we prevent its default thereby, running our needed action
@@ -320,7 +322,7 @@ btnLogin.addEventListener('click', function (e) {
     // Dispay UI and welcome message. 
     //? Then we take the firstname by splitting and getting the first [0] 
     // labelWelcome.textContent = `Welcome back ${currentAccount.owner.split(' ')[0]}`;
-    printWelcome(`${currentAccount.owner.split(' ')[0]}`)
+    printWelcome(`${currentAccount.owner.split(' ')[0]}`);
     containerApp.style.opacity = 1;
 
     // create current time and date
@@ -367,6 +369,19 @@ btnLogin.addEventListener('click', function (e) {
 
     console.log('pin correct');
   }
+});
+
+// Logout button
+btnLogout.addEventListener('click', function() {
+  labelWelcome.textContent = "Log in to get started";
+  containerApp.style.opacity = 0;
+  clearInterval(timer);
+});
+btnLogout.addEventListener('mouseover', function(){
+  btnLogout.textContent = 'for real?';
+});
+btnLogout.addEventListener('mouseout', function(){
+  btnLogout.textContent = 'logout now';
 });
 
 // Tranfer amount 
