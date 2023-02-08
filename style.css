@@ -29,6 +29,44 @@ nav {
   align-items: center;
   padding: 0 2rem;
 }
+@media screen and (max-width: 1000px) {
+  nav {
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    padding: 0;
+  }
+
+  .logo {
+    order: -1;
+  }
+
+  .login {
+    width: 100%;
+  }
+
+  .login__input {
+    width: 50% !important;
+  }
+
+  main.app {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 5rem;
+  }
+
+  div.summary {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  div.balance {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 100%;
+  }
+}
 
 .welcome {
   font-size: 1.9rem;
